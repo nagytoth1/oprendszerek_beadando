@@ -17,8 +17,7 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 - Web- és fájlszerver (Ubuntu): 10.0.0.2
 - Kliens: DHCP [10.0.0.3 ; 10.0.0.31] tartományból
 
-![Logikai topológia](./logikai_topologia.jpg)
-
+![Logikai topológia](logikai_topologia.JPG)
 ### Tűzfal-beállítások
 
 - RouterOS-ben alapértelmezett portok elrejtve (80, 22), felesleges portok kikapcsolva ()
