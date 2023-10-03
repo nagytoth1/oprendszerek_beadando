@@ -2,6 +2,8 @@
 
 ## Választott feladat: 2. _todo_
 
+##
+
 ## Router terv
 
 Egy Mikrotik routert szeretnénk bekonfigurálni a feladatnak megfelelően, a router tűzfalat, DHCP, valamint DNS-szervert biztosítana a belső hálózat (továbbiakban: LAN, vagy Internal, 10.0.0.0/27) számára, valamint a belső hálózatban lévő virtuális gépek részére átjáró az internet felé.
@@ -25,9 +27,24 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt a Mikrotik routeren szintén beállítjuk.
 
+
 ## Webszerver terv
 
+- Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
+- A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
 **todo**
+
+## Csoportok kialakításának a terve
+
+- Alapvetően 3 féle felhasználói csoportot különböztetünk meg:
+		- Gazdasági
+		- Tanárok
+		- Közös
+
+## Fájlszerver terv 
+
+
+## Levelezőszerver terv 
 
 ## Weboldalak terv
 
