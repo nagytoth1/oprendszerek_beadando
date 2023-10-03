@@ -31,8 +31,16 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 ## Webszerver terv
 
 - Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
+- Apache telepítése:
+	- sudo apt install apache2
+- html fájl helye:
+	- /var/www
+- Szerver aktiválása:
+	- sudo a2ensite <conf fájl> 
+- Portok config fájljának a helye:
+	- /etx/apache2/ports.conf 
 - A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
-**todo**
+
 
 ## Csoportok kialakításának a terve
 
@@ -42,7 +50,19 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 		- Közös
 
 ## Fájlszerver terv 
-
+- Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.: 
+	- Dokumentáció: https://ubuntu.com/server/docs/samba-file-server
+- Samba telepítése:
+	- sudo apt install samba 
+- Felhasználók felvétele:
+	- smbpasswd -a user
+	- groupadd -g 501 tanarok
+	- groupadd -g 502 gazdasagi
+	- groupadd -g 500 kozos
+- Csoport mapppa létrehozása, és jogosultság hozzáadása(példa a "tanarok" csoporttal): 
+	- mdkir -p /var/fileServer/tanarok 
+	- chgrp tanarok /var/fileServer/tanarok 
+	- chmod 660 /var/fileServer/tanarok 
 
 ## Levelezőszerver terv 
 
