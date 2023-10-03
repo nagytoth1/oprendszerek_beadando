@@ -1,6 +1,6 @@
 # Korszerű operációs rendszerek beadandó terv
 
-## Választott feladat: 2. _todo_
+## Választott feladat: 2.feladat: Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés
 
 ##
 
