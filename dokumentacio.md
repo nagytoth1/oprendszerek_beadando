@@ -27,6 +27,8 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt a Mikrotik routeren szintén beállítjuk.
 
+## Internetszolgáltatókra vonatkozó terv
+**todo**
 
 ## Webszerver terv
 
