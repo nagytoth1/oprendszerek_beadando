@@ -1,10 +1,58 @@
-# Korszerű operációs rendszerek beadandó terv
+## Korszerű operációs rendszerek
 
-## Választott feladat: 2.feladat: Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés
+<center><h2> Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés</h2></center>
 
-##
+## Tervezés
 
-## Router terv
+### 1. Internetszolgáltatás
+A Magyarországon üzemelő internetszolgáltatók közötti választási lehetőségeket az iskola elhelyezkedése korlátozza. Ennek megfelelően két internetszolgáltatót találtunk, akiknek a környéken lefedettségük van.
+
+A lehetőségek a következők:
+Szolgáltató | Csomag | Garantált letöltési sebesség | Garantált feltöltési sebesség | Bruttó havidíj | Saját beüzemelési lehetőség | elektronikus számla (e-Pack kedvezmény)
+------------|---------|------|------|-----|-----|----
+Vodafone | Internet 150  | 105 Mbit/s | 7 Mbit/s | 3000 Ft/hó | van | igen
+Vodafone | Internet 300  | 210 Mbit/s | 14 Mbit/s | 5000 Ft/hó | van | igen
+Digi | DIGINet Növekedés 100 | 90 Mbit/s | 60 Mbit/s | 5040 Ft/hó | nincs | igen
+Digi | DIGINet Növekedés 500  | 300 Mbit/s | 100 Mbit/s | 6230 Ft/hó | nincs | igen
+
+A szolgáltató által bevezetett internetes kábelt ajánlott egy WiFi-szórásra egyaránt képes router eszközhöz csatlakoztatni, így a vezetékes hálózat mellett a vezeték nélküli hálózatot is kiépíthetünk az iskolában, amennyiben erre igény van. A vezeték nélküli hálózat lefedettsége azonban korlátozott, az előbb ismertetett Mikrotik router esetében 10 méter. Ahhoz, hogy a teljes iskola épületét lefedjük, szükség lehet bizonyos helyiségben lehetőleg szintén Mikrotik márkájú jelismétlőket, hozzáférési pontokat kihelyezni, hogy az iskola legtöbb pontján stabil jelerősséget és internetelérést kapjunk.
+
+A fenti táblázat alapján részünkről a második lehetőség optimális lehet, ez név szerint a Vodafone Internet 300-as csomagja.
+
+### 2. Router típusának kiválasztása
+
+A választott internetszolgáltató alapértelmezetten biztosítana router eszközt, de ezt érdemes lemondani, mi fogjuk biztosítani ezt az eszközt.
+
+Jelenlegi raktárkészletünknek megfelelően az alábbi eszközök közül tudnak választani:
+| Router márkája | Előnyei                                                                                                          | Hátrányai                                                                                                                                                                                       |
+| -------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cisco          | felsőbb árkategória, ipari szabvány, rengeteg leírás található a beállításához, jelentős felhasználói bázisa van | drága, inkább nagyvállalati környezetben ajánlatos telepíteni, beállítása parancssori alkalmazáson keresztül történik, üzemeltetése ebből fakadóan külön erre specializált szakértelmet igényel |
+| Mikrotik       | olcsóbb eszközök, kis- és középvállalati felhasználásra alkalmas                                                 |                                                                                                                                                                                                 |
+| Tenda          | olcsóbb, alsó árketegóriás eszközök                                                                              | konfigurálhatósága, személyre szabhatósága gyengébb, mint az előbb felsoroltaké                                                                                                                 |
+
+
+### 3. Szerver operációs rendszer
+
+A webszerver minimális, statikus weboldalakkal fog üzemelni, nem lesz szükség adatbázisszerver futtatására. Ebből fakadóan a kért fájl- levelező- és webszerver üzemeltethető egy számítógépen. Az erőforrások megfelelő kihasználása végett érdemes lehet a különféle szervereket külön virtuális gépekre telepíteni (lényegében ekkor is egy fizikai szervergépre lenne szükség), azonban ezt jelenleg nem tartjuk indokoltnak.
+
+Lehetőségek:
+
+| Operációs rendszer | Előnyök                                        | Hátrányok                                   |
+| ------------------ | ---------------------------------------------- | ------------------------------------------- |
+| Ubuntu Linux       | ingyenes                                       | a telepítés akár egy napot is igénybe vehet |
+| Windows 10         | a webszerver, levelezőszerver telepítése gyors | fizetős (egyszeri költség)                  |
+
+Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ezért az ingyenessége végett Ubuntu Linux operációs rendszert ajánljuk.
+
+### 4. Webszerver
+
+| webszerver | előnyök                                              | hátrányok                                                     |
+| ---------- | ---------------------------------------------------- | ------------------------------------------------------------- |
+| Apache     | ingyenes, beállítása egyszerű                        | kevés funkció, kevés biztonsági beállítás található meg benne |
+| Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény |
+| XAMPP      | ingyenes                                             |
+
+### Router terv
 
 Egy Mikrotik routert szeretnénk bekonfigurálni a feladatnak megfelelően, a router tűzfalat, DHCP, valamint DNS-szervert biztosítana a belső hálózat (továbbiakban: LAN, vagy Internal, 10.0.0.0/27) számára, valamint a belső hálózatban lévő virtuális gépek részére átjáró az internet felé.
 
