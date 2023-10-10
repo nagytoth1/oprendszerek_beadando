@@ -21,15 +21,18 @@ A fenti táblázat alapján részünkről a második lehetőség optimális lehe
 
 ### 2. Router típusának kiválasztása
 
-A választott internetszolgáltató alapértelmezetten biztosítana router eszközt, de ezt érdemes lemondani, mi fogjuk biztosítani ezt az eszközt.
+Routerre azért van szükségünk, hogy az iskolai belső hálózatot az internetre csatlakoztassuk. Amennyiben egy géptermet vagy egy másik hálózati egységet szeretnénk leválasztani az internetről, természetesen erre is lehetőséget biztosít egy router. 
+
+A választott internetszolgáltató alapértelmezés szerint biztosítana router eszközt, de ezt érdemes lemondani, mi fogjuk biztosítani ezt az eszközt.
 
 Jelenlegi raktárkészletünknek megfelelően az alábbi eszközök közül tudnak választani:
 | Router márkája | Előnyei                                                                                                          | Hátrányai                                                                                                                                                                                       |
 | -------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Cisco          | felsőbb árkategória, ipari szabvány, rengeteg leírás található a beállításához, jelentős felhasználói bázisa van | drága, inkább nagyvállalati környezetben ajánlatos telepíteni, beállítása parancssori alkalmazáson keresztül történik, üzemeltetése ebből fakadóan külön erre specializált szakértelmet igényel |
-| Mikrotik       | olcsóbb eszközök, kis- és középvállalati felhasználásra alkalmas                                                 |                                                                                                                                                                                                 |
+| Cisco          | felsőbb árkategória, ipari szabvány, rengeteg leírás található a beállításához, jelentős felhasználói bázisa van | drága, inkább nagyvállalati környezetben ajánlatos telepíteni, beállítása parancssori alkalmazáson keresztül történik, telepítése, üzemeltetése ebből fakadóan külön erre specializált szakértelmet igényel |
+| Mikrotik       | megfizethetőbb vállalati megoldások, kis- és középvállalati felhasználásra alkalmas, beállítása nem igényel akkora szaktudást                                                 |                     nagyszabású hálózati felépítéshez nem annyira alkalmas, korlátozott fejlesztői és felhasználói támogatással és erőforrásokkal rendelkezik                                                                                                                                                                            |
 | Tenda          | olcsóbb, alsó árketegóriás eszközök                                                                              | konfigurálhatósága, személyre szabhatósága gyengébb, mint az előbb felsoroltaké                                                                                                                 |
 
+Ugyanakkor fontos megjegyezni, hogy a router egy támadási felület, úgyhogy a biztonság szempontjából mindenképp egyetlen routert ajánlatos beszerezni, az ajánlott, a lehetőségeknek megfelelő védelmi beállításokat elvégezni rajta, és a belső hálózatot switchekkel, vezetéknélküli access pointokkal (AP-kal) bővíteni.
 
 ### 3. Szerver operációs rendszer
 
@@ -49,8 +52,8 @@ Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ez
 | webszerver | előnyök                                              | hátrányok                                                     |
 | ---------- | ---------------------------------------------------- | ------------------------------------------------------------- |
 | Apache     | ingyenes, beállítása egyszerű                        | kevés funkció, kevés biztonsági beállítás található meg benne |
-| Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény |
-| XAMPP      | ingyenes                                             |
+| Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény, lightweight: kevesebb erőforrást igényel a géptől | egyetlen konfigurációs fájl, kevésbé rugalmas, a fejlesztett modulok felett nincs irányításunk (nem lehet letiltani modulokat), kisebb közösségi támogatás
+| XAMPP      | ingyenes                                            | egy egész fejlesztői csomag telepítését vonja maga után, ami felesleges, biztonsági beállítások hiánya
 
 ### Router terv
 
@@ -77,21 +80,6 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt a Mikrotik routeren szintén beállítjuk.
 
-## Webszerver terv
-
-- Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
-- Apache telepítése:
-	- sudo apt install apache2
-- html fájl helye:
-	- /var/www
-- Szerver aktiválása:
-	- sudo a2ensite <conf fájl> 
-- Portok config fájljának a helye:
-	- /etx/apache2/ports.conf 
-- A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
-
-Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
-
 ## Felhasználói csoportok kialakítási terve
 
 - Alapvetően 3 féle felhasználói csoportot különböztetünk meg:
@@ -101,7 +89,7 @@ Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
 
 ## Fájlszerver terv 
 - Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.: 
-	- Dokumentáció: https://ubuntu.com/server/docs/samba-file-server
+	- [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
 - Samba telepítése:
 	- sudo apt install samba 
 - Felhasználók felvétele:
@@ -124,10 +112,40 @@ Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver 
 
 [Dovecot Dokumentáció](https://ubuntu.com/server/docs/mail-dovecot)
 
-## Weboldalak terv
+## Webszerver terv
+
+- Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
+- Apache telepítése:
+	- sudo apt install apache2
+- html fájl helye:
+	- /var/www
+- Szerver aktiválása:
+	- sudo a2ensite <conf fájl> 
+- Portok config fájljának a helye:
+	- /etx/apache2/ports.conf 
+- A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
+
+Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
+
+A webszer alapvetően statikus tartalmú HTML-állományokat fog hosztolni dinamikus útvonalak nélkül, ezért az Apache szerveren kívül másra esetünkben nincs szükség.
+
+
+## Elérhető weboldalak
+Egy iskolának a weboldalát kívánjuk létrehozni, mely a következő elképzelések alapján valósul meg. A weboldal megnyitása követően egy Kezdőlap/Főoldal jelenik, ahol egy rövid leírás található magáról az iskoláról, illetve az elért sikereiről.
+
 ![Weboldalterv](./weboldalterv.png)
 
-A weboldal látványtervét Gajdos György készítette el.
+A weboldalon található egy menüsáv, ahol a felhasználó könnyen tud tájékozodni a felületen. A menüsávban megtalálhatóak a **Kezdőlap**, **Felvételi**, **Tantárgyak**, **Magunkról**, **Kapcsolat** pont. 
+
+A **Felvételi** oldalon lehet tájékozodni a szülőknek és a diákoknak, hogy mire érdemes oda figyelni, illetve a követelményeket is tudják megtekinteni. 
+
+A **Tantárgyak** oldalon látják a felhasználók, hogy milyen tantárgyakat oktatnak az adott iskolában és kik lehetnek a diákok tanáraik. 
+
+A **Magunkról** oldalon lehet megtekinteni, az iskola bemutatkozását, illetve mire a legbüszkébb. Szintén itt lehet megtekinteni a korábbi eseményekről történt videókat, mint például a Magyar költészet napja vagy Sportnap és a házirend is itt érhető el. 
+
+A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például cím, telefon és OM azonosítója és ez alatt egy google térkép ablak, ahol külön keresés nélkül lehet megtekinteni az iskola pontos helyét. 
+
+A weboldaltervet Gajdos György készítette el.
 
 ## Csapattagok
 
