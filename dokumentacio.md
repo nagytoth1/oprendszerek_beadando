@@ -70,13 +70,12 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 ![Logikai topológia](logikai_topologia.JPG)
 ### Tűzfal-beállítások
 
-- RouterOS-ben alapértelmezett portok elrejtve (80, 22), felesleges portok kikapcsolva ()
-- port forwarding: router 80-as (HTTP, majd később akár 443-as, HTTPS) portjára érkező kéréseket átirányítom az Internal webszerverének megfelelő portjára (_TODO: 8080?_)
+- RouterOS-ben alapértelmezett portok átállítva (www, ssh)
+- a felesleges portokat kikapcsoljuk (api-ssl, ftp, telnet, www-ssl)
+- alapvetően minden port zárt, amíg annak megnyitását valami nem indokolja
+- port forwarding: router 80-as (HTTP, majd később akár 443-as, HTTPS) portjára érkező kéréseket átirányítom az Internal webszerverének megfelelő portjára (8080)
 
 Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt a Mikrotik routeren szintén beállítjuk.
-
-## Internetszolgáltatókra vonatkozó terv
-**todo**
 
 ## Webszerver terv
 
@@ -91,8 +90,9 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 	- /etx/apache2/ports.conf 
 - A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
 
+Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
 
-## Csoportok kialakításának a terve
+## Felhasználói csoportok kialakítási terve
 
 - Alapvetően 3 féle felhasználói csoportot különböztetünk meg:
 		- Gazdasági
@@ -112,16 +112,25 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 - Csoport mapppa létrehozása, és jogosultság hozzáadása(példa a "tanarok" csoporttal): 
 	- mdkir -p /var/fileServer/tanarok 
 	- chgrp tanarok /var/fileServer/tanarok 
-	- chmod 660 /var/fileServer/tanarok 
+	- chmod 660 /var/fileServer/tanarok
+
+A Samba fájlszerver __todo__ protokollt használ. 
 
 ## Levelezőszerver terv 
 
-## Weboldalak terv
+POP3-as protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
+A levelek küldésére az SMTP protokoll fog működni.
+Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver konfigurálásához.
 
-**todo**
+[Dovecot Dokumentáció](https://ubuntu.com/server/docs/mail-dovecot)
+
+## Weboldalak terv
+![Weboldalterv](./weboldalterv.png)
+
+A weboldal látványtervét Gajdos György készítette el.
 
 ## Csapattagok
 
 - Sipos Levente (Neptun-kód: D985ET)
-- Gajdos György (Neptun-kód: **todo**)
+- Gajdos György (Neptun-kód: AM7NTP)
 - Nagy-Tóth Bence (Neptun-kód: DZKBX0)
