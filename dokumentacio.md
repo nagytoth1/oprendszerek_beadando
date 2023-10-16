@@ -175,6 +175,22 @@ __todo__
 ## 2. Megvalósítás <a name="implementation"></a>
 A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
 
+Webszerver:
+Apache Webserver-t használtunk a webszerver kialakításához:
+A webszerver a 80-as porton érhető el, a "public.beadando.server" nevezető domainen.
+A html-fájl megtalálható a "/var/www/szero" mappában.
+
+Fájlszerver:
+
+Levelező Szerver:
+Dovecot IMAP/POP3 Server-t használtunk a levelező szerver kialakítása érdekében.
+Annak érdekében hogy ne kelljen az ip-címet használni a "@" után ezért egy domain nevet kellett létrehozni:
+a domain amelyen keresztül tudunk levelezni:
+	- public.mail.beadando
+Majd a "mailutils" package feltelepítésével már tudunk emaileket küldeni különböző usereknek
+Email küldése:
+	- mail -s "test Email" <user>@public.mail.beadando
+
 ## 3. Csapattagok <a name="tagok"></a>
 
 - Sipos Levente (Neptun-kód: D985ET)
