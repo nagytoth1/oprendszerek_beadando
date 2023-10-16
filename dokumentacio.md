@@ -18,6 +18,8 @@
 	1. [Levelezőszerver terv](#mailserver)
 	1. [Webszerver terv](#webterv)
 	1. [Elérhető weboldalak](#weboldalak)
+	1. [Használati esetek](#usecases)
+2. [Megvalósítás](#implementation)
 3. [Csapattagok](#tagok)
 
 ## 1. Tervezés <a name="tervezes"></a>
@@ -60,8 +62,9 @@ Lehetőségek:
 
 | Operációs rendszer | Előnyök                                        | Hátrányok                                   |
 | ------------------ | ---------------------------------------------- | ------------------------------------------- |
-| Ubuntu Linux       | ingyenes                                       | a telepítés akár egy napot is igénybe vehet |
+| Ubuntu Linux       | ingyenes, gyakori frissítéseket kap,                                       | a telepítés akár egy napot is igénybe vehet |
 | Windows Server 2022         | a webszerver, levelezőszerver telepítése gyors | fizetős (egyszeri költség)                  |
+| CentOS Linux         | ingyenes, kevesebb erőforrással fut, gyakori frissítések, stabil (az alkalmazásokat elég ritkábban frissíteni), hasznos biztonsági funkciók                 | nehézkesebb használat: ha egy alkalmazás legfrissebb változatát szeretnénk telepíteni, azt manuálisan kell elvégezni
 
 Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ezért az ingyenessége végett Ubuntu Linux operációs rendszert ajánljuk.
 
@@ -166,7 +169,13 @@ A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például 
 
 A weboldaltervet Gajdos György készítette el.
 
-## 2. Csapattagok <a name="tagok"></a>
+### 1.13. Használati esetek <a name="usecases"></a>
+__todo__
+
+## 2. Megvalósítás <a name="implementation"></a>
+A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
+
+## 3. Csapattagok <a name="tagok"></a>
 
 - Sipos Levente (Neptun-kód: D985ET)
 - Gajdos György (Neptun-kód: AM7NTP)
