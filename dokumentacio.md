@@ -1,5 +1,6 @@
 <h2> Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés</h2>
-<center>Szerzők: Sipos Levente, Gajdos György és Nagy-Tóth Bence</center> 
+
+**<center>Szerzők: Sipos Levente, Gajdos György és <br> Nagy-Tóth Bence</center>**
 
 ---
 
