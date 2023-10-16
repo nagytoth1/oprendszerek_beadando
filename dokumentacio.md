@@ -2,9 +2,25 @@
 
 <center><h2> Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés</h2></center>
 
-## Tervezés
+## Tartalomjegyzék
+1. [Tervezés](#tervezes)
+	1. [Internetszolgáltatás](#internet)
+	1. [Router típusának kiválasztása](#router)
+	1. [Szerver operációs rendszer típusának kiválasztása](#szerver)
+	1. [Különböző webszerver-lehetőségek összehasonlítása](#web)
+	1. [Router terv](#routing)
+	1. [IP-címzési terv](#cimzes)
+	1. [Tűzfal-beállítások](#tuzfal)
+	1. [Felhasználói csoportok kialakítási terve ](#csoportok)
+	1. [Fájlszerver terv](#fszerver)
+	1. [Levelezőszerver terv](#mailserver)
+	1. [Webszerver terv](#webterv)
+	1. [Elérhető weboldalak](#weboldalak)
+3. [Csapattagok](#tagok)
 
-### 1. Internetszolgáltatás
+## 1. Tervezés <a name="tervezes"></a>
+
+### 1.1. Internetszolgáltatás <a name="internet"></a>
 A Magyarországon üzemelő internetszolgáltatók közötti választási lehetőségeket az iskola elhelyezkedése korlátozza. Ennek megfelelően két internetszolgáltatót találtunk, akiknek a környéken lefedettségük van.
 
 A lehetőségek a következők:
@@ -19,7 +35,7 @@ A szolgáltató által bevezetett internetes kábelt ajánlott egy WiFi-szórás
 
 A fenti táblázat alapján részünkről a második lehetőség optimális lehet, ez név szerint a Vodafone Internet 300-as csomagja.
 
-### 2. Router típusának kiválasztása
+### 1.2. Router típusának kiválasztása <a name="router"></a>
 
 Routerre azért van szükségünk, hogy az iskolai belső hálózatot az internetre csatlakoztassuk. Amennyiben egy géptermet vagy egy másik hálózati egységet szeretnénk leválasztani az internetről, természetesen erre is lehetőséget biztosít egy router. 
 
@@ -34,7 +50,7 @@ Jelenlegi raktárkészletünknek megfelelően az alábbi eszközök közül tudn
 
 Ugyanakkor fontos megjegyezni, hogy a router egy támadási felület, úgyhogy a biztonság szempontjából mindenképp egyetlen routert ajánlatos beszerezni, az ajánlott, a lehetőségeknek megfelelő védelmi beállításokat elvégezni rajta, és a belső hálózatot switchekkel, vezetéknélküli access pointokkal (AP-kal) bővíteni.
 
-### 3. Szerver operációs rendszer
+### 1.3. Szerver operációs rendszer <a name="szerver"></a>
 
 A webszerver minimális, statikus weboldalakkal fog üzemelni, nem lesz szükség adatbázisszerver futtatására. Ebből fakadóan a kért fájl- levelező- és webszerver üzemeltethető egy számítógépen. Az erőforrások megfelelő kihasználása végett érdemes lehet a különféle szervereket külön virtuális gépekre telepíteni (lényegében ekkor is egy fizikai szervergépre lenne szükség), azonban ezt jelenleg nem tartjuk indokoltnak.
 
@@ -43,11 +59,11 @@ Lehetőségek:
 | Operációs rendszer | Előnyök                                        | Hátrányok                                   |
 | ------------------ | ---------------------------------------------- | ------------------------------------------- |
 | Ubuntu Linux       | ingyenes                                       | a telepítés akár egy napot is igénybe vehet |
-| Windows 10         | a webszerver, levelezőszerver telepítése gyors | fizetős (egyszeri költség)                  |
+| Windows Server 2022         | a webszerver, levelezőszerver telepítése gyors | fizetős (egyszeri költség)                  |
 
 Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ezért az ingyenessége végett Ubuntu Linux operációs rendszert ajánljuk.
 
-### 4. Webszerver
+### 1.4. Különböző webszerver-lehetőségek összehasonlítása <a name="web"></a>
 
 | webszerver | előnyök                                              | hátrányok                                                     |
 | ---------- | ---------------------------------------------------- | ------------------------------------------------------------- |
@@ -55,13 +71,13 @@ Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ez
 | Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény, lightweight: kevesebb erőforrást igényel a géptől | egyetlen konfigurációs fájl, kevésbé rugalmas, a fejlesztett modulok felett nincs irányításunk (nem lehet letiltani modulokat), kisebb közösségi támogatás
 | XAMPP      | ingyenes                                            | egy egész fejlesztői csomag telepítését vonja maga után, ami felesleges, biztonsági beállítások hiánya
 
-### Router terv
+### 1.5. Router terv <a name="routing"></a>
 
-Egy Mikrotik routert szeretnénk bekonfigurálni a feladatnak megfelelően, a router tűzfalat, DHCP, valamint DNS-szervert biztosítana a belső hálózat (továbbiakban: LAN, vagy Internal, 10.0.0.0/27) számára, valamint a belső hálózatban lévő virtuális gépek részére átjáró az internet felé.
+Egy Mikrotik routert szeretnénk bekonfigurálni a feladatnak megfelelően, a router tűzfalat, DHCP-, valamint DNS-szervert biztosítana a belső hálózat (továbbiakban: LAN, vagy Internal, 10.0.0.0/27) számára, valamint a belső hálózatban lévő virtuális gépek részére átjáró az internet felé.
 
 A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánjuk elvégezni, magát a routert virtuális géppel fogjuk szimulálni.
 
-### IP-címzési terv
+### 1.6. IP-címzési terv <a name="cimzes"></a>
 
 - Internal (belső) hálózat: 10.0.0.0/27
 - Alhálózati maszk: 255.255.255.224
@@ -71,7 +87,8 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 - Kliens: DHCP [10.0.0.3 ; 10.0.0.31] tartományból
 
 ![Logikai topológia](logikai_topologia.JPG)
-### Tűzfal-beállítások
+
+### 1.7. Tűzfal-beállítások <a name="tuzfal"></a>
 
 - RouterOS-ben alapértelmezett portok átállítva (www, ssh)
 - a felesleges portokat kikapcsoljuk (api-ssl, ftp, telnet, www-ssl)
@@ -80,14 +97,14 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt a Mikrotik routeren szintén beállítjuk.
 
-## Felhasználói csoportok kialakítási terve
+### 1.8. Felhasználói csoportok kialakítási terve <a name="csoportok"></a>
 
 - Alapvetően 3 féle felhasználói csoportot különböztetünk meg:
 		- Gazdasági
 		- Tanárok
 		- Közös
 
-## Fájlszerver terv 
+### 1.9. Fájlszerver terv <a name="fszerver"></a>
 - Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.: 
 	- [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
 - Samba telepítése:
@@ -102,9 +119,9 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 	- chgrp tanarok /var/fileServer/tanarok 
 	- chmod 660 /var/fileServer/tanarok
 
-A Samba fájlszerver __todo__ protokollt használ. 
+A Samba fájlszerver az **SMB** hálózati protokollt használja. 
 
-## Levelezőszerver terv 
+### 1.10. Levelezőszerver terv <a name="mailserver"></a>
 
 POP3-as protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
 A levelek küldésére az SMTP protokoll fog működni.
@@ -112,7 +129,7 @@ Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver 
 
 [Dovecot Dokumentáció](https://ubuntu.com/server/docs/mail-dovecot)
 
-## Webszerver terv
+### 1.11. Webszerver terv <a name="webterv"></a>
 
 - Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
 - Apache telepítése:
@@ -130,7 +147,7 @@ Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
 A webszer alapvetően statikus tartalmú HTML-állományokat fog hosztolni dinamikus útvonalak nélkül, ezért az Apache szerveren kívül másra esetünkben nincs szükség.
 
 
-## Elérhető weboldalak
+### 1.12. Elérhető weboldalak <a name="weboldalak"></a>
 Egy iskolának a weboldalát kívánjuk létrehozni, mely a következő elképzelések alapján valósul meg. A weboldal megnyitása követően egy Kezdőlap/Főoldal jelenik, ahol egy rövid leírás található magáról az iskoláról, illetve az elért sikereiről.
 
 ![Weboldalterv](./weboldalterv.png)
@@ -147,7 +164,7 @@ A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például 
 
 A weboldaltervet Gajdos György készítette el.
 
-## Csapattagok
+## 2. Csapattagok <a name="tagok"></a>
 
 - Sipos Levente (Neptun-kód: D985ET)
 - Gajdos György (Neptun-kód: AM7NTP)
