@@ -1,6 +1,7 @@
-## Korszerű operációs rendszerek
+<h2> Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés</h2>
+<center>Szerzők: Sipos Levente, Gajdos György és Nagy-Tóth Bence</center> 
 
-<center><h2> Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés</h2></center>
+---
 
 ## Tartalomjegyzék
 1. [Tervezés](#tervezes)
