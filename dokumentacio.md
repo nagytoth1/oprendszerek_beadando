@@ -170,7 +170,12 @@ A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például 
 A weboldaltervet Gajdos György készítette el.
 
 ### 1.13. Használati esetek <a name="usecases"></a>
-__todo__
+Közvetlenül vagy közvetve levezetve öt különböző csoportot különböztethetünk meg, akik a rendszerrel kapcsolatba lépnek:  
+
+- Tanárok, akik a diákok oktatásáért felelősek. 
+- Diákok/Szülők, akik a diákok tanulását és előrehaladását követhetik figyelemmel.
+- Iskola titkár, aki az iskola gazdasági ügyeiért felel. 
+- IT üzemeltetők, akik az informatikai rendszereket tartják karban. 
 
 ## 2. Megvalósítás <a name="implementation"></a>
 A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
