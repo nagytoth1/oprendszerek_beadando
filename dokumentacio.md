@@ -79,7 +79,7 @@ Ugyanakkor fontos megjegyezni, hogy a router egy támadási felület, úgyhogy a
 
 A webszerver minimális, statikus weboldalakkal fog üzemelni, nem lesz szükség adatbázisszerver futtatására. Ebből fakadóan a kért fájl- levelező- és webszerver üzemeltethető egy számítógépen. Az erőforrások megfelelő kihasználása végett érdemes lehet a különféle szervereket külön virtuális gépekre telepíteni (lényegében ekkor is egy fizikai szervergépre lenne szükség), azonban ezt jelenleg nem tartjuk indokoltnak.
 
-Lehetőségek:
+A szervergépen futó operációs rendszerre a különböző lehetőségek állnak rendelkezésre:
 
 | Operációs rendszer | Előnyök                                        | Hátrányok                                   |
 | ------------------ | ---------------------------------------------- | ------------------------------------------- |
