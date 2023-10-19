@@ -5,6 +5,7 @@
 ---
 
 ## Tartalomjegyzék
+[Absztrakt](#abstract)
 1. [Tervezés](#tervezes)
 	1. [Internetszolgáltatás](#internet)
 	1. [Router típusának kiválasztása](#router)
@@ -22,6 +23,26 @@
 2. [Megvalósítás](#implementation)
 3. [Csapattagok](#tagok)
 
+## Bevezetés  <a name="abstract"></a>
+Feladatunk a Battyhyány Lajos Gimnázium (fiktív iskola) informatikai rendszerének megteremtése. Az intézmény igazgatója tisztelt meg minket ezen munka megtervezésével és kivitelezésével. Az informatikai rendszer magában fogja foglalni egy internethálózat kiépítését, a belső hálózat megtervezését, egy fájlszerver, webszerver és egy levelezőszerver felépítését és üzemeltetését, valamint a kért kliensek és szerverek használatához szükséges operációs rendszerek telepítését, ennek megfelelő szoftveres és hardveres erőforrások biztosítását. Ezek mellett fontos, hogy az iskola hálózatát megfelelő minőségű védelemmel (tűzfal, jogosultsági rendszerek) is ellássuk.
+
+Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. A szolgáltató az XYZMail. Ezt jelenleg weben érik el a `public` címen. Arra
+viszont igény lenne, hogy minden kliens számítógépre kerüljön fel egy levelezőkliens, hogy így
+kényelmesebb legyen a levelek kezelése.
+A rendszer kiépítésekor az adatok biztonságára is kiemelt figyelmet kell fordítani. Ez
+különösen fontos, hiszen személyes és egészségügyi adatokat is kezelni fog a rendszer. A
+medikai adatok mentésére napi rendszerességgel van szükség, a holnap információ
+adattartalmának viszont csak hetente. Elvárás továbbá, hogy minden számítógépen legyen
+vírusirtó.
+Az intézet a kiépítés után szeretné igénybe venni az üzemeltetési szolgáltatásunkat is,
+ami az informatikai hardverek (kliens, szervergépek), a hálózat, az operációs rendszerek
+felügyeletét és karbantartását, a felhasználók informatikai támogatását és a rendszerek (így a
+medikai rendszer) konfigurációját is magában foglalja.
+
+## Követelménylista <a name="abstract"></a>
+__todo__: min. 30 követelményt felsorolni javaslat: csináljuk meg excelben, aztán utána tegyük bele ide
+
+[Spreadsheet to markdown](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/)
 ## 1. Tervezés <a name="tervezes"></a>
 
 ### 1.1. Internetszolgáltatás <a name="internet"></a>
@@ -110,6 +131,9 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 		- Közös
 
 ### 1.9. Fájlszerver terv <a name="fszerver"></a>
+
+__todo__ Fájlszervereket összehasonlító táblázat ide
+
 - Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.: 
 	- [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
 - Samba telepítése:
@@ -127,6 +151,8 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 A Samba fájlszerver az **SMB** hálózati protokollt használja. 
 
 ### 1.10. Levelezőszerver terv <a name="mailserver"></a>
+
+__todo__ Levelezőszervereket összehasonlító táblázat ide
 
 POP3-as protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
 A levelek küldésére az SMTP protokoll fog működni.
