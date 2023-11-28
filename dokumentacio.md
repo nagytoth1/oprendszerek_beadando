@@ -80,8 +80,6 @@ kényelmesebb legyen a levelek kezelése.
 | Hálózat         | A hálózat legyen bővíthető újabb alhálózatokkal (skálázhatóság)                                                             |
 | Hálózat         | Internet elérhetőség biztosítása minden iskolai résztvevő számára                                                           |
 
-[Spreadsheet to markdown](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/)
-
 ## 2.1 Szoftverválasztás <a id="sel"></a>
 
 ### 2.1.1 Internetszolgáltatás kiválasztása <a id="sel-1"></a>
