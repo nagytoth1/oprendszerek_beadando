@@ -5,28 +5,29 @@
 ---
 
 ## Tartalomjegyzék
-[Absztrakt](#abstract)
-1. [Tervezés](#tervezes)
-	1. [Internetszolgáltatás](#internet)
-	1. [Router típusának kiválasztása](#router)
-	1. [Szerver operációs rendszer típusának kiválasztása](#szerver)
-	1. [Különböző webszerver-lehetőségek összehasonlítása](#web)
-	1. [Router terv](#routing)
-	1. [IP-címzési terv](#cimzes)
-	1. [Tűzfal-beállítások](#tuzfal)
-	1. [Felhasználói csoportok kialakítási terve ](#csoportok)
-	1. [Fájlszerver terv](#fszerver)
-	1. [Levelezőszerver terv](#mailserver)
-	1. [Webszerver terv](#webterv)
-	1. [Elérhető weboldalak](#weboldalak)
-	1. [Használati esetek](#usecases)
-2. [Megvalósítás](#implementation)
-3. [Csapattagok](#tagok)
 
-## Bevezetés  <a name="abstract"></a>
+1.1 [Szöveges leírás](#spec)<br>
+1.2 [Használati esetek](#use)<br>
+1.3 [Követelménylista](#req)<br>
+2.1 [Szoftverválasztás](#sel)<br>&emsp;
+2.1.1 [Internetszolgáltatás kiválasztása](#sel-1)<br>&emsp;
+2.1.2 [Router típusának kiválasztása](#sel-2)<br>&emsp;
+2.1.3 [Szerver operációs rendszer kiválasztása](#sel-3)<br>&emsp;
+2.1.4 [Webszerver kiválasztása](#sel-4)<br>
+2.2 [Rendszerterv vázlat](#sys)<br>
+2.3 [Hálózati terv](#net)<br>
+2.4 [Szerver tervezése](#serv)<br>
+2.5 [Kliens tervezése](#cli)<br>
+2.6 [Tesztelési terv](#testp)<br>
+3 [Megvalósítás](#imp)<br>
+4 [Tesztelés](#test)<br>
+5 [Csapattagok](#mem)<br>
+
+## 1.1. Szöveges leírás <a id="spec"></a>
+
 Feladatunk a Battyhyány Lajos Gimnázium (fiktív iskola) informatikai rendszerének megteremtése. Az intézmény igazgatója tisztelt meg minket ezen munka megtervezésével és kivitelezésével. Az informatikai rendszer magában fogja foglalni egy internethálózat kiépítését, a belső hálózat megtervezését, egy fájlszerver, webszerver és egy levelezőszerver felépítését és üzemeltetését, valamint a kért kliensek és szerverek használatához szükséges operációs rendszerek telepítését, ennek megfelelő szoftveres és hardveres erőforrások biztosítását. Ezek mellett fontos, hogy az iskola hálózatát megfelelő minőségű védelemmel (tűzfal, jogosultsági rendszerek) is ellássuk.
 
-Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. A szolgáltató az XYZMail. Ezt jelenleg weben érik el a `public` címen. Arra
+Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. A szolgáltató az XYZMail. Ezt jelenleg weben érik el a **todo** `public` címen. Arra
 viszont igény lenne, hogy minden kliens számítógépre kerüljön fel egy levelezőkliens, hogy így
 kényelmesebb legyen a levelek kezelése.
 A rendszer kiépítésekor az adatok biztonságára is kiemelt figyelmet kell fordítani. Ez
@@ -39,71 +40,98 @@ ami az informatikai hardverek (kliens, szervergépek), a hálózat, az operáci�
 felügyeletét és karbantartását, a felhasználók informatikai támogatását és a rendszerek (így a
 medikai rendszer) konfigurációját is magában foglalja.
 
-## Követelménylista <a name="abstract"></a>
-__todo__: min. 30 követelményt felsorolni javaslat: csináljuk meg excelben, aztán utána tegyük bele ide
+## 1.2 Használati esetek <a id="use"></a> **todo**
+
+## 1.3 Követelménylista <a id="req"></a>
+
+| Komponens       | Elvárás                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Fájlszerver     | Bejelentkezési lehetőség biztosítva legyen                                                                                  |
+| Fájlszerver     | Legyenek adottak a következő felelősségi körök: közös, hallgatók, tanárok, gazdasági                                        |
+| Hálózat         | VPN-kapcsolat távoli csatlakozás esetére a karbantartó részére                                                              |
+| Hálózat         | Webszerverhez távoli kapcsolat a fejlesztők részére                                                                         |
+| Hálózat         | 5 teremnek megfelelő, kiosztható alhálózat biztosítása                                                                      |
+| Hálózat         | A webszerver címe, elérhetősége ne változzon                                                                                |
+| Levelezőkliens  | A levelezőkliens minden gépre legyen feltelepítve.                                                                          |
+| Levelezőkliens  | A kliens egyszer letölti az emailt, és eldobja                                                                              |
+| Levelezőszerver | Legfeljebb 50 klienst szolgáljon ki egyidőben érezhető lassulás nélkül                                                      |
+| Monitorozás     | A szerver monitorozható erőforráskihasználtság (CPU, RAM, diszkek) szempontjából                                            |
+| Webszerver      | A weboldalak legyenek publikusak,  bárki számára megtekinthetőek                                                            |
+| Webszerver      | A webszerverhez tartozzon domain (tartománynév)                                                                             |
+| Webszerver      | Legfeljebb 500 klienst szolgáljon ki egyidőben érezhető lassulás nélkül                                                     |
+| Webszerver      | Legyen az iskola elérhetőségeit tartalmazó oldal                                                                            |
+| Webszerver      | Legyen felvételi tájékoztató oldal                                                                                          |
+| Webszerver      | Legyen egy bemutatkozó oldala az iskolának                                                                                  |
+| Üzemeltetés     | Telefonos elérhetőség és távoli  számítógépes kapcsolat szükséges lehet az iskola dolgozói számára munkaidőben (8:00-16:00) |
 
 [Spreadsheet to markdown](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/)
-## 1. Tervezés <a name="tervezes"></a>
 
-### 1.1. Internetszolgáltatás <a name="internet"></a>
+## 2.1 Szoftverválasztás <a id="sel"></a>
+
+### 2.1.1 Internetszolgáltatás kiválasztása <a id="sel-1"></a>
+
 A Magyarországon üzemelő internetszolgáltatók közötti választási lehetőségeket az iskola elhelyezkedése korlátozza. Ennek megfelelően két internetszolgáltatót találtunk, akiknek a környéken lefedettségük van.
 
 A lehetőségek a következők:
 Szolgáltató | Csomag | Garantált letöltési sebesség | Garantált feltöltési sebesség | Bruttó havidíj | Saját beüzemelési lehetőség | elektronikus számla (e-Pack kedvezmény)
 ------------|---------|------|------|-----|-----|----
-Vodafone | Internet 150  | 105 Mbit/s | 7 Mbit/s | 3000 Ft/hó | van | igen
-Vodafone | Internet 300  | 210 Mbit/s | 14 Mbit/s | 5000 Ft/hó | van | igen
+Vodafone | Internet 150 | 105 Mbit/s | 7 Mbit/s | 3000 Ft/hó | van | igen
+Vodafone | Internet 300 | 210 Mbit/s | 14 Mbit/s | 5000 Ft/hó | van | igen
 Digi | DIGINet Növekedés 100 | 90 Mbit/s | 60 Mbit/s | 5040 Ft/hó | nincs | igen
-Digi | DIGINet Növekedés 500  | 300 Mbit/s | 100 Mbit/s | 6230 Ft/hó | nincs | igen
+Digi | DIGINet Növekedés 500 | 300 Mbit/s | 100 Mbit/s | 6230 Ft/hó | nincs | igen
 
 A szolgáltató által bevezetett internetes kábelt ajánlott egy WiFi-szórásra egyaránt képes router eszközhöz csatlakoztatni, így a vezetékes hálózat mellett a vezeték nélküli hálózatot is kiépíthetünk az iskolában, amennyiben erre igény van. A vezeték nélküli hálózat lefedettsége azonban korlátozott, az előbb ismertetett Mikrotik router esetében 10 méter. Ahhoz, hogy a teljes iskola épületét lefedjük, szükség lehet bizonyos helyiségben lehetőleg szintén Mikrotik márkájú jelismétlőket, hozzáférési pontokat kihelyezni, hogy az iskola legtöbb pontján stabil jelerősséget és internetelérést kapjunk.
 
 A fenti táblázat alapján részünkről a második lehetőség optimális lehet, ez név szerint a Vodafone Internet 300-as csomagja.
 
-### 1.2. Router típusának kiválasztása <a name="router"></a>
+### 2.1.2 Router típusának kiválasztása <a id="sel-2"></a>
 
-Routerre azért van szükségünk, hogy az iskolai belső hálózatot az internetre csatlakoztassuk. Amennyiben egy géptermet vagy egy másik hálózati egységet szeretnénk leválasztani az internetről, természetesen erre is lehetőséget biztosít egy router. 
+Routerre azért van szükségünk, hogy az iskolai belső hálózatot az internetre csatlakoztassuk. Amennyiben egy géptermet vagy egy másik hálózati egységet szeretnénk leválasztani az internetről, természetesen erre is lehetőséget biztosít egy router.
 
 A választott internetszolgáltató alapértelmezés szerint biztosítana router eszközt, de ezt érdemes lemondani, mi fogjuk biztosítani ezt az eszközt.
 
 Jelenlegi raktárkészletünknek megfelelően az alábbi eszközök közül tudnak választani:
-| Router márkája | Előnyei                                                                                                          | Hátrányai                                                                                                                                                                                       |
+| Router márkája | Előnyei | Hátrányai |
 | -------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Cisco          | felsőbb árkategória, ipari szabvány, rengeteg leírás található a beállításához, jelentős felhasználói bázisa van | drága, inkább nagyvállalati környezetben ajánlatos telepíteni, beállítása parancssori alkalmazáson keresztül történik, telepítése, üzemeltetése ebből fakadóan külön erre specializált szakértelmet igényel |
-| Mikrotik       | megfizethetőbb vállalati megoldások, kis- és középvállalati felhasználásra alkalmas, beállítása nem igényel akkora szaktudást                                                 |                     nagyszabású hálózati felépítéshez nem annyira alkalmas, korlátozott fejlesztői és felhasználói támogatással és erőforrásokkal rendelkezik                                                                                                                                                                            |
-| Tenda          | olcsóbb, alsó árketegóriás eszközök                                                                              | konfigurálhatósága, személyre szabhatósága gyengébb, mint az előbb felsoroltaké                                                                                                                 |
+| Cisco | felsőbb árkategória, ipari szabvány, rengeteg leírás található a beállításához, jelentős felhasználói bázisa van | drága, inkább nagyvállalati környezetben ajánlatos telepíteni, beállítása parancssori alkalmazáson keresztül történik, telepítése, üzemeltetése ebből fakadóan külön erre specializált szakértelmet igényel |
+| Mikrotik | megfizethetőbb vállalati megoldások, kis- és középvállalati felhasználásra alkalmas, beállítása nem igényel akkora szaktudást | nagyszabású hálózati felépítéshez nem annyira alkalmas, korlátozott fejlesztői és felhasználói támogatással és erőforrásokkal rendelkezik |
+| Tenda | olcsóbb, alsó árketegóriás eszközök | konfigurálhatósága, személyre szabhatósága gyengébb, mint az előbb felsoroltaké |
 
 Ugyanakkor fontos megjegyezni, hogy a router egy támadási felület, úgyhogy a biztonság szempontjából mindenképp egyetlen routert ajánlatos beszerezni, az ajánlott, a lehetőségeknek megfelelő védelmi beállításokat elvégezni rajta, és a belső hálózatot switchekkel, vezetéknélküli access pointokkal (AP-kal) bővíteni.
 
-### 1.3. Szerver operációs rendszer <a name="szerver"></a>
+### 2.1.3. Szerver operációs rendszer kiválasztása <a id="sel-3"></a>
 
 A webszerver minimális, statikus weboldalakkal fog üzemelni, nem lesz szükség adatbázisszerver futtatására. Ebből fakadóan a kért fájl- levelező- és webszerver üzemeltethető egy számítógépen. Az erőforrások megfelelő kihasználása végett érdemes lehet a különféle szervereket külön virtuális gépekre telepíteni (lényegében ekkor is egy fizikai szervergépre lenne szükség), azonban ezt jelenleg nem tartjuk indokoltnak.
 
 A szervergépen futó operációs rendszerre a különböző lehetőségek állnak rendelkezésre:
 
-| Operációs rendszer | Előnyök                                        | Hátrányok                                   |
-| ------------------ | ---------------------------------------------- | ------------------------------------------- |
-| Ubuntu Linux       | ingyenes, gyakori frissítéseket kap,                                       | a telepítés akár egy napot is igénybe vehet |
-| Windows Server 2022         | a webszerver, levelezőszerver telepítése gyors | fizetős (egyszeri költség)                  |
-| CentOS Linux         | ingyenes, kevesebb erőforrással fut, gyakori frissítések, stabil (az alkalmazásokat elég ritkábban frissíteni), hasznos biztonsági funkciók                 | nehézkesebb használat: ha egy alkalmazás legfrissebb változatát szeretnénk telepíteni, azt manuálisan kell elvégezni
+| Operációs rendszer  | Előnyök                                                                                                                                     | Hátrányok                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Ubuntu Linux        | ingyenes, gyakori frissítéseket kap,                                                                                                        | a telepítés akár egy napot is igénybe vehet                                                                          |
+| Windows Server 2022 | a webszerver, levelezőszerver telepítése gyors                                                                                              | fizetős (egyszeri költség)                                                                                           |
+| CentOS Linux        | ingyenes, kevesebb erőforrással fut, gyakori frissítések, stabil (az alkalmazásokat elég ritkábban frissíteni), hasznos biztonsági funkciók | nehézkesebb használat: ha egy alkalmazás legfrissebb változatát szeretnénk telepíteni, azt manuálisan kell elvégezni |
 
 Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ezért az ingyenessége végett Ubuntu Linux operációs rendszert ajánljuk.
 
-### 1.4. Különböző webszerver-lehetőségek összehasonlítása <a name="web"></a>
+### 2.1.4. Webszerver kiválasztása <a id="sel-4"></a>
 
-| webszerver | előnyök                                              | hátrányok                                                     |
-| ---------- | ---------------------------------------------------- | ------------------------------------------------------------- |
-| Apache     | ingyenes, beállítása egyszerű                        | kevés funkció, kevés biztonsági beállítás található meg benne |
-| Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény, lightweight: kevesebb erőforrást igényel a géptől | egyetlen konfigurációs fájl, kevésbé rugalmas, a fejlesztett modulok felett nincs irányításunk (nem lehet letiltani modulokat), kisebb közösségi támogatás
-| XAMPP      | ingyenes                                            | egy egész fejlesztői csomag telepítését vonja maga után, ami felesleges, biztonsági beállítások hiánya
+| webszerver | előnyök                                                                                                 | hátrányok                                                                                                                                                  |
+| ---------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Apache     | ingyenes, beállítása egyszerű                                                                           | kevés funkció, kevés biztonsági beállítás található meg benne                                                                                              |
+| Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény, lightweight: kevesebb erőforrást igényel a géptől | egyetlen konfigurációs fájl, kevésbé rugalmas, a fejlesztett modulok felett nincs irányításunk (nem lehet letiltani modulokat), kisebb közösségi támogatás |
+| XAMPP      | ingyenes                                                                                                | egy egész fejlesztői csomag telepítését vonja maga után, ami felesleges, biztonsági beállítások hiánya                                                     |
 
-### 1.5. Router terv <a name="routing"></a>
+## 2.2 Rendszerterv vázlat <a id="sys"></a> **todo**
+
+## 2.3 Hálózati terv <a id="net"></a>
+
+### 2.3.1 Router terv <a name="routing"></a>
 
 Egy Mikrotik routert szeretnénk bekonfigurálni a feladatnak megfelelően, a router tűzfalat, DHCP-, valamint DNS-szervert biztosítana a belső hálózat (továbbiakban: LAN, vagy Internal, 10.0.0.0/27) számára, valamint a belső hálózatban lévő virtuális gépek részére átjáró az internet felé.
 
 A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánjuk elvégezni, magát a routert virtuális géppel fogjuk szimulálni.
 
-### 1.6. IP-címzési terv <a name="cimzes"></a>
+### 2.3.2 IP-címzési terv <a name="cimzes"></a>
 
 - Internal (belső) hálózat: 10.0.0.0/27
 - Alhálózati maszk: 255.255.255.224
@@ -114,7 +142,7 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 ![Logikai topológia](logikai_topologia.JPG)
 
-### 1.7. Tűzfal-beállítások <a name="tuzfal"></a>
+### 2.3.3 Tűzfal-beállítások <a name="tuzfal"></a>
 
 - RouterOS-ben alapértelmezett portok átállítva (www, ssh)
 - a felesleges portokat kikapcsoljuk (api-ssl, ftp, telnet, www-ssl)
@@ -123,106 +151,104 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt a Mikrotik routeren szintén beállítjuk.
 
-### 1.8. Felhasználói csoportok kialakítási terve <a name="csoportok"></a>
+## 2.4 Szerver tervezése <a id="serv"></a>
 
-- Alapvetően 3 féle felhasználói csoportot különböztetünk meg:
-		- Gazdasági
-		- Tanárok
-		- Közös
+### 2.4.1 Fájlszerver terv <a name="fszerver"></a>
 
-### 1.9. Fájlszerver terv <a name="fszerver"></a>
+**todo** Fájlszervereket összehasonlító táblázat ide
 
-__todo__ Fájlszervereket összehasonlító táblázat ide
-
-- Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.: 
-	- [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
+- Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.:
+  - [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
 - Samba telepítése:
-	- sudo apt install samba 
+  - sudo apt install samba
 - Felhasználók felvétele:
-	- smbpasswd -a user
-	- groupadd -g 501 tanarok
-	- groupadd -g 502 gazdasagi
-	- groupadd -g 500 kozos
-- Csoport mapppa létrehozása, és jogosultság hozzáadása(példa a "tanarok" csoporttal): 
-	- mdkir -p /var/fileServer/tanarok 
-	- chgrp tanarok /var/fileServer/tanarok 
-	- chmod 660 /var/fileServer/tanarok
+  - smbpasswd -a user
+  - groupadd -g 501 tanarok
+  - groupadd -g 502 gazdasagi
+  - groupadd -g 500 kozos
+- Csoport mapppa létrehozása, és jogosultság hozzáadása(példa a "tanarok" csoporttal):
+  - mdkir -p /var/fileServer/tanarok
+  - chgrp tanarok /var/fileServer/tanarok
+  - chmod 660 /var/fileServer/tanarok
 
-A Samba fájlszerver az **SMB** hálózati protokollt használja. 
+A Samba fájlszerver az **SMB** hálózati protokollt használja.
 
-### 1.10. Levelezőszerver terv <a name="mailserver"></a>
+### 2.4.2 Levelezőszerver terv <a name="mailserver"></a>
 
-__todo__ Levelezőszervereket összehasonlító táblázat ide
+**todo** Levelezőszervereket összehasonlító táblázat ide
 
-POP3-as protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
+POP3 protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
 A levelek küldésére az SMTP protokoll fog működni.
 Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver konfigurálásához.
 
 [Dovecot Dokumentáció](https://ubuntu.com/server/docs/mail-dovecot)
 
-### 1.11. Webszerver terv <a name="webterv"></a>
+### 2.4.3 Webszerver terv <a name="webterv"></a>
 
 - Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
 - Apache telepítése:
-	- sudo apt install apache2
+  - sudo apt install apache2
 - html fájl helye:
-	- /var/www
+  - /var/www
 - Szerver aktiválása:
-	- sudo a2ensite <conf fájl> 
+  - sudo a2ensite <conf fájl>
 - Portok config fájljának a helye:
-	- /etx/apache2/ports.conf 
+  - /etx/apache2/ports.conf
 - A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
 
 Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
 
 A webszer alapvetően statikus tartalmú HTML-állományokat fog hosztolni dinamikus útvonalak nélkül, ezért az Apache szerveren kívül másra esetünkben nincs szükség.
 
+### 2.4.4 Elérhető weboldalak <a name="weboldalak"></a>
 
-### 1.12. Elérhető weboldalak <a name="weboldalak"></a>
 Egy iskolának a weboldalát kívánjuk létrehozni, mely a következő elképzelések alapján valósul meg. A weboldal megnyitása követően egy Kezdőlap/Főoldal jelenik, ahol egy rövid leírás található magáról az iskoláról, illetve az elért sikereiről.
 
 ![Weboldalterv](./weboldalterv.png)
 
-A weboldalon található egy menüsáv, ahol a felhasználó könnyen tud tájékozodni a felületen. A menüsávban megtalálhatóak a **Kezdőlap**, **Felvételi**, **Tantárgyak**, **Magunkról**, **Kapcsolat** pont. 
+A weboldalon található egy menüsáv, ahol a felhasználó könnyen tud tájékozodni a felületen. A menüsávban megtalálhatóak a **Kezdőlap**, **Felvételi**, **Tantárgyak**, **Magunkról**, **Kapcsolat** pont.
 
-A **Felvételi** oldalon lehet tájékozodni a szülőknek és a diákoknak, hogy mire érdemes oda figyelni, illetve a követelményeket is tudják megtekinteni. 
+A **Felvételi** oldalon lehet tájékozodni a szülőknek és a diákoknak, hogy mire érdemes oda figyelni, illetve a követelményeket is tudják megtekinteni.
 
-A **Tantárgyak** oldalon látják a felhasználók, hogy milyen tantárgyakat oktatnak az adott iskolában és kik lehetnek a diákok tanáraik. 
+A **Tantárgyak** oldalon látják a felhasználók, hogy milyen tantárgyakat oktatnak az adott iskolában és kik lehetnek a diákok tanáraik.
 
-A **Magunkról** oldalon lehet megtekinteni, az iskola bemutatkozását, illetve mire a legbüszkébb. Szintén itt lehet megtekinteni a korábbi eseményekről történt videókat, mint például a Magyar költészet napja vagy Sportnap és a házirend is itt érhető el. 
+A **Magunkról** oldalon lehet megtekinteni, az iskola bemutatkozását, illetve mire a legbüszkébb. Szintén itt lehet megtekinteni a korábbi eseményekről történt videókat, mint például a Magyar költészet napja vagy Sportnap és a házirend is itt érhető el.
 
-A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például cím, telefon és OM azonosítója és ez alatt egy google térkép ablak, ahol külön keresés nélkül lehet megtekinteni az iskola pontos helyét. 
+A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például cím, telefon és OM azonosítója és ez alatt egy google térkép ablak, ahol külön keresés nélkül lehet megtekinteni az iskola pontos helyét.
 
 A weboldaltervet Gajdos György készítette el.
 
-### 1.13. Használati esetek <a name="usecases"></a>
-Közvetlenül vagy közvetve levezetve öt különböző csoportot különböztethetünk meg, akik a rendszerrel kapcsolatba lépnek:  
+### 2.4.5 Felhasználói csoportok kialakítási terve <a name="csoportok"></a>
 
-- Tanárok, akik a diákok oktatásáért felelősek. 
-- Diákok/Szülők, akik a diákok tanulását és előrehaladását követhetik figyelemmel.
-- Iskola titkár, aki az iskola gazdasági ügyeiért felel. 
-- IT üzemeltetők, akik az informatikai rendszereket tartják karban. 
+- Alapvetően 3 féle felhasználói csoportot különböztetünk meg: - Gazdasági - Tanárok - Közös
 
-## 2. Megvalósítás <a name="implementation"></a>
+## 2.5 Kliens tervezése <a id="cli"></a> **todo**
+
+## 2.6 Tesztelési terv <a id="testp"></a> **todo**
+
+## 3. Megvalósítás <a id="imp"></a>
+
 A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
 
-Webszerver:
-Apache Webserver-t használtunk a webszerver kialakításához:
+### 3.1 Webszerver:
+
+Apache-t használtunk a webszerver kialakításához:
 A webszerver a 80-as porton érhető el, a "public.beadando.server" nevezető domainen.
 A html-fájl megtalálható a "/var/www/szero" mappában.
 
-Fájlszerver:
+### 3.2 Fájlszerver: **todo**
 
-Levelező Szerver:
+### 3.3 Levelezőszerver
+
 Dovecot IMAP/POP3 Server-t használtunk a levelező szerver kialakítása érdekében.
 Annak érdekében hogy ne kelljen az ip-címet használni a "@" után ezért egy domain nevet kellett létrehozni:
-a domain amelyen keresztül tudunk levelezni:
-	- public.mail.beadando
+a domain amelyen keresztül tudunk levelezni: - public.mail.beadando
 Majd a "mailutils" package feltelepítésével már tudunk emaileket küldeni különböző usereknek
-Email küldése:
-	- mail -s "test Email" <user>@public.mail.beadando
+Email küldése: - mail -s "test Email" <user>@public.mail.beadando
 
-## 3. Csapattagok <a name="tagok"></a>
+## 4. Tesztelés <a id="test"></a> **todo**
+
+## 5. Csapattagok <a id="mem"></a>
 
 - Sipos Levente (Neptun-kód: D985ET)
 - Gajdos György (Neptun-kód: AM7NTP)
