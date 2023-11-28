@@ -13,13 +13,25 @@
 2.1.1 [Internetszolgáltatás kiválasztása](#sel-1)<br>&emsp;
 2.1.2 [Router típusának kiválasztása](#sel-2)<br>&emsp;
 2.1.3 [Szerver operációs rendszer kiválasztása](#sel-3)<br>&emsp;
-2.1.4 [Webszerver kiválasztása](#sel-4)<br>
+2.1.4 [Webszerver kiválasztása](#sel-4)<br>&emsp;
+2.1.5 [Fájlszerver kiválasztása](#sel-5)<br>
 2.2 [Rendszerterv vázlat](#sys)<br>
-2.3 [Hálózati terv](#net)<br>
-2.4 [Szerver tervezése](#serv)<br>
+2.3 [Hálózati terv](#net)<br>&emsp;
+2.3.1 [Router terv](#net-1)<br>&emsp;
+2.3.2 [IP-címzési terv](#net-2)<br>&emsp;
+2.3.3 [Tűzfal-beállítások](#net-3)<br>
+2.4 [Szerver tervezése](#serv)<br>&emsp;
+2.4.1 [Fájlszerver terv](#serv-1)<br>&emsp;
+2.4.2 [Levelezőszerver terv](#serv-2)<br>&emsp;
+2.4.3 [Webszerver terv](#serv-3)<br>&emsp;
+2.4.4 [Elérhető weboldalak](#serv-4)<br>&emsp;
+2.4.5 [Felhasználói csoportok kialakítási terve](#serv-5)<br>
 2.5 [Kliens tervezése](#cli)<br>
 2.6 [Tesztelési terv](#testp)<br>
-3 [Megvalósítás](#imp)<br>
+3 [Megvalósítás](#imp)<br>&emsp;
+3.1 [Webszerver](#imp-1)<br>&emsp;
+3.2 [Fájlszerver](#imp-2)<br>&emsp;
+3.3 [Levelezőszerver](#imp-3)<br>&emsp;
 4 [Tesztelés](#test)<br>
 5 [Csapattagok](#mem)<br>
 
@@ -30,15 +42,6 @@ Feladatunk a Battyhyány Lajos Gimnázium (fiktív iskola) informatikai rendszer
 Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. A szolgáltató az XYZMail. Ezt jelenleg weben érik el a **todo** `public` címen. Arra
 viszont igény lenne, hogy minden kliens számítógépre kerüljön fel egy levelezőkliens, hogy így
 kényelmesebb legyen a levelek kezelése.
-A rendszer kiépítésekor az adatok biztonságára is kiemelt figyelmet kell fordítani. Ez
-különösen fontos, hiszen személyes és egészségügyi adatokat is kezelni fog a rendszer. A
-medikai adatok mentésére napi rendszerességgel van szükség, a holnap információ
-adattartalmának viszont csak hetente. Elvárás továbbá, hogy minden számítógépen legyen
-vírusirtó.
-Az intézet a kiépítés után szeretné igénybe venni az üzemeltetési szolgáltatásunkat is,
-ami az informatikai hardverek (kliens, szervergépek), a hálózat, az operációs rendszerek
-felügyeletét és karbantartását, a felhasználók informatikai támogatását és a rendszerek (így a
-medikai rendszer) konfigurációját is magában foglalja.
 
 ## 1.2 Használati esetek <a id="use"></a> **todo**
 
@@ -121,17 +124,19 @@ Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ez
 | Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény, lightweight: kevesebb erőforrást igényel a géptől | egyetlen konfigurációs fájl, kevésbé rugalmas, a fejlesztett modulok felett nincs irányításunk (nem lehet letiltani modulokat), kisebb közösségi támogatás |
 | XAMPP      | ingyenes                                                                                                | egy egész fejlesztői csomag telepítését vonja maga után, ami felesleges, biztonsági beállítások hiánya                                                     |
 
+### 2.1.5 Fájlszerver kiválasztása <a id="sel-5"></a> **todo** Fájlszervereket összehasonlító táblázat ide
+
 ## 2.2 Rendszerterv vázlat <a id="sys"></a> **todo**
 
 ## 2.3 Hálózati terv <a id="net"></a>
 
-### 2.3.1 Router terv <a name="routing"></a>
+### 2.3.1 Router terv <a id="net-1"></a>
 
 Egy Mikrotik routert szeretnénk bekonfigurálni a feladatnak megfelelően, a router tűzfalat, DHCP-, valamint DNS-szervert biztosítana a belső hálózat (továbbiakban: LAN, vagy Internal, 10.0.0.0/27) számára, valamint a belső hálózatban lévő virtuális gépek részére átjáró az internet felé.
 
 A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánjuk elvégezni, magát a routert virtuális géppel fogjuk szimulálni.
 
-### 2.3.2 IP-címzési terv <a name="cimzes"></a>
+### 2.3.2 IP-címzési terv <a id="net-2"></a>
 
 - Internal (belső) hálózat: 10.0.0.0/27
 - Alhálózati maszk: 255.255.255.224
@@ -142,7 +147,7 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 ![Logikai topológia](logikai_topologia.JPG)
 
-### 2.3.3 Tűzfal-beállítások <a name="tuzfal"></a>
+### 2.3.3 Tűzfal-beállítások <a id="net-3"></a>
 
 - RouterOS-ben alapértelmezett portok átállítva (www, ssh)
 - a felesleges portokat kikapcsoljuk (api-ssl, ftp, telnet, www-ssl)
@@ -153,9 +158,7 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 
 ## 2.4 Szerver tervezése <a id="serv"></a>
 
-### 2.4.1 Fájlszerver terv <a name="fszerver"></a>
-
-**todo** Fájlszervereket összehasonlító táblázat ide
+### 2.4.1 Fájlszerver terv <a id="serv-1"></a>
 
 - Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.:
   - [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
@@ -173,7 +176,7 @@ Opcionális: Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurál
 
 A Samba fájlszerver az **SMB** hálózati protokollt használja.
 
-### 2.4.2 Levelezőszerver terv <a name="mailserver"></a>
+### 2.4.2 Levelezőszerver terv <a id="serv-2"></a>
 
 **todo** Levelezőszervereket összehasonlító táblázat ide
 
@@ -183,7 +186,7 @@ Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver 
 
 [Dovecot Dokumentáció](https://ubuntu.com/server/docs/mail-dovecot)
 
-### 2.4.3 Webszerver terv <a name="webterv"></a>
+### 2.4.3 Webszerver terv <a id="serv-3"></a>
 
 - Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
 - Apache telepítése:
@@ -200,7 +203,7 @@ Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
 
 A webszer alapvetően statikus tartalmú HTML-állományokat fog hosztolni dinamikus útvonalak nélkül, ezért az Apache szerveren kívül másra esetünkben nincs szükség.
 
-### 2.4.4 Elérhető weboldalak <a name="weboldalak"></a>
+### 2.4.4 Elérhető weboldalak <a id="serv-4"></a>
 
 Egy iskolának a weboldalát kívánjuk létrehozni, mely a következő elképzelések alapján valósul meg. A weboldal megnyitása követően egy Kezdőlap/Főoldal jelenik, ahol egy rövid leírás található magáról az iskoláról, illetve az elért sikereiről.
 
@@ -218,7 +221,7 @@ A **Kapcsolat** oldalon találhatóak az iskola elérhetősége, mint például 
 
 A weboldaltervet Gajdos György készítette el.
 
-### 2.4.5 Felhasználói csoportok kialakítási terve <a name="csoportok"></a>
+### 2.4.5 Felhasználói csoportok kialakítási terve <a id="serv-5"></a>
 
 - Alapvetően 3 féle felhasználói csoportot különböztetünk meg: - Gazdasági - Tanárok - Közös
 
@@ -230,15 +233,15 @@ A weboldaltervet Gajdos György készítette el.
 
 A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
 
-### 3.1 Webszerver:
+### 3.1 Webszerver <a id="imp-1"></a>
 
 Apache-t használtunk a webszerver kialakításához:
 A webszerver a 80-as porton érhető el, a "public.beadando.server" nevezető domainen.
 A html-fájl megtalálható a "/var/www/szero" mappában.
 
-### 3.2 Fájlszerver: **todo**
+### 3.2 Fájlszerver <a id="imp-2"></a> **todo**
 
-### 3.3 Levelezőszerver
+### 3.3 Levelezőszerver <a id="imp-3"></a>
 
 Dovecot IMAP/POP3 Server-t használtunk a levelező szerver kialakítása érdekében.
 Annak érdekében hogy ne kelljen az ip-címet használni a "@" után ezért egy domain nevet kellett létrehozni:
