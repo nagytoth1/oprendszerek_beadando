@@ -66,6 +66,19 @@ kényelmesebb legyen a levelek kezelése.
 | Webszerver      | Legyen felvételi tájékoztató oldal                                                                                          |
 | Webszerver      | Legyen egy bemutatkozó oldala az iskolának                                                                                  |
 | Üzemeltetés     | Telefonos elérhetőség és távoli  számítógépes kapcsolat szükséges lehet az iskola dolgozói számára munkaidőben (8:00-16:00) |
+| Üzemeltetés     | Ha meghibásodik egy hardverelem, akkor az legyen megjavítva/cserélve.                                                       |
+| Fájlszerver     | A felelősségi köröknek megfelelően a közös mappát mindenki láthassa                                                         |
+| Fájlszerver     | A felelősségi köröknek megfelelően a hallgatók mappát csak a hallgatók láthassák                                            |
+| Fájlszerver     | A felelősségi köröknek megfelelően a tanárok mappát csak a tanárok (igazgató is tanárként lesz regisztrálva) láthassa       |
+| Fájlszerver     | A felelősségi köröknek megfelelően a gazdasági mappát csak a gazdasági csoport tagjai láthassák                             |
+| Hálózat         | Csak egy DHCP-szerver legyen, az szolgáljon ki minden címet                                                                 |
+| Hálózat         | Ne legyen IP címütközés                                                                                                     |
+| Hálózat         | Legyen fenntartva hely a statikus IP-címeknek                                                                               |
+| Hálózat         | A nyomtató kapjon statikus IP-címet                                                                                         |
+| Hálózat         | A webszerver kapjon statikus IP-címet                                                                                       |
+| Hálózat         | A kapott IP-címtartománnyal optimálisan gazdálkodjunk                                                                       |
+| Hálózat         | A hálózat legyen bővíthető újabb alhálózatokkal (skálázhatóság)                                                             |
+| Hálózat         | Internet elérhetőség biztosítása minden iskolai résztvevő számára                                                           |
 
 [Spreadsheet to markdown](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/)
 
