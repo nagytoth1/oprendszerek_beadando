@@ -246,6 +246,29 @@ A weboldaltervet Gajdos György készítette el.
 
 ## 2.6 Tesztelési terv <a id="testp"></a> **todo**
 
+| Teszt azonosító | Tesztelés tárgya<br>(mit teszteltünk)                                         | Elvárt eredmény | Megjegyzés                                             |
+| --------------- | ----------------------------------------------------------------------------- | --------------- | ------------------------------------------------------ |
+| NET_01          | Router elérése WinBoxban                                                      | Sikeres         | elrontott portkonfigokat vissza tudjuk hozni Winboxban |
+| NET_02          | Router konfigurációs felületének elérése 80-as porton keresztül               | Sikertelen      | hardeninget teszteljük                                 |
+| NET_03          | Router konfigurációs felületének elérése a beállított porton keresztül        | Sikeres         | hardeninget teszteljük                                 |
+| NET_04          | Router elérése SSH-val 22-es porton keresztül                                 | Sikertelen      | hardeninget teszteljük                                 |
+| NET_05          | Router elérése SSH-val a beállított porton keresztül                          | Sikeres         | hardeninget teszteljük                                 |
+| NET_06          | Router elérése Telnettel                                                      | Sikertelen      | hardeninget teszteljük                                 |
+| NET_07          | Routerre fájlokat juttatunk FTP protokoll segítségével                        | Sikertelen      | hardeninget teszteljük                                 |
+| NET_08          | Router elérése SSH-val                                                        | Sikertelen      | hardeninget teszteljük                                 |
+| NET_09          | Webszerver elérése SSH-val a routeren keresztül (port forwarding)             | Sikeres         | tűzfalbeállításokat teszteljük                         |
+| NET_10          | Iskola honlapjának elérése a routeren (gatewayen) keresztül (port forwarding) | Sikeres         | tűzfalbeállításokat teszteljük                         |
+| NET_11          | DHCP-vel IP-konfigurációk kiosztása 29 géptermi gép részére                   | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_12          | DHCP-vel IP-konfigurációk kiosztása egy újabb, 30. gép részére                | Sikertelen      | DHCP-szerver konfigurációját teszteljük                |
+| NET_13          | webszerver 10.0.0.2 címet kapja DHCP-szervertől                               | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_14          | az Internal belső hálózat gépei a 10.0.0.2-31 tartományból kapnak címeket     | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_15          | a gepterem1 belső hálózat gépei a 10.0.0.34-62 tartományból kapnak címeket    | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_16          | a gepterem2 belső hálózat gépei a 10.0.0.66-94 tartományból kapnak címeket    | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_17          | a gepterem3 belső hálózat gépei a 10.0.0.98-126 tartományból kapnak címeket   | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_18          | gepterem1 és gepterem2 gépei elérik egymást (ping)                            | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_19          | gepterem2 és gepterem3 gépei elérik egymást (ping)                            | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+| NET_20          | Internal és gepterem1 gépei elérik egymást (ping)                             | Sikeres         | DHCP-szerver konfigurációját teszteljük                |
+
 ## 3. Megvalósítás <a id="imp"></a>
 
 A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
