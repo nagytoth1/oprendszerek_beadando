@@ -29,9 +29,10 @@
 2.5 [Kliens tervezése](#cli)<br>
 2.6 [Tesztelési terv](#testp)<br>
 3 [Megvalósítás](#imp)<br>&emsp;
-3.1 [Webszerver](#imp-1)<br>&emsp;
-3.2 [Fájlszerver](#imp-2)<br>&emsp;
-3.3 [Levelezőszerver](#imp-3)<br>&emsp;
+3.1 [Hálózat](#imp-1)<br>&emsp;
+3.2 [Webszerver](#imp-2)<br>&emsp;
+3.3 [Fájlszerver](#imp-3)<br>&emsp;
+3.4 [Levelezőszerver](#imp-4)<br>&emsp;
 4 [Tesztelés](#test)<br>
 5 [Csapattagok](#mem)<br>
 
@@ -273,9 +274,11 @@ A weboldaltervet Gajdos György készítette el.
 
 A következő alfejezet a fentebb említett tervezet konkrét megvalósítási részleteiről fog szólni, a különböző problémákról, amelyekbe ütköztünk, valamint ezek megoldásáról, megoldására tett kísérletekről.
 
-### Hálózat megvalósítása
+### 3.1 Hálózat megvalósítása <a id="imp-1"></a>
 
 A Mikrotik router konfigurációját Nagy-Tóth Bence végezte. 5 db interfészt kapcsoltunk a Mikrotik routerre, ezek a következőképpen vannak kiosztva:
+
+#### Interfészek
 
 - **ether1**: külső elérésre, az internetszolgáltató felé néző interfész, lényegében ez az egyetlen kiút/gateway az iskolából külvilág felé, az internetes böngészést így kipipáltuk
 - **ether2**: a router Internal LAN-hálózat felé néző interfésze, ennek felhasználását az iskolára bíztuk, valószínűleg egy tanári szoba hálózati forgalmát fogja kezelni
@@ -283,10 +286,10 @@ A Mikrotik router konfigurációját Nagy-Tóth Bence végezte. 5 db interfészt
 - **ether4**: a router gepterem2 LAN-hálózata felé néző interfésze, a 2-es gépterem gépeit tervezzük hálózatba kapcsolni ezen keresztül
 - **ether5**: a router gepterem3 LAN-hálózata felé néző interfésze, a 3-as gépterem gépeit tervezzük hálózatba kapcsolni ezen keresztül
 
-Az alábbi ábrán látható, hogy melyik interface melyik hálózatra van kötve, és hogy az adott LAN-hálózatban mely címen szolgál ő gatewayként.
-![router interfaces](interfacek.png)
+Az alábbi ábrán látható, hogy melyik interface melyik hálózatra van kötve, és hogy az adott LAN-hálózaton belül mely címen szolgál ő gatewayként.
+![router interfaces](interfacek.jpg)
 
-Megtett hardening lépések:
+#### Megtett hardening lépések
 
 Alapvető biztonsági beállítások sorozatát végeztük el, az alapértelmezett jól ismert portokat (HTTP=80, SSH=22) átírtuk. Jelenleg a router úgy működik, hogy kívülről a router elérhető a 80-as porton, viszont átirányít az Internal hálózat webszerverére, így lényegében publikussá tettük az iskola honlapját, ami így a router publikus, internetszolgáltatótól kapott címén keresztül, a HTTP jól ismert 80-as portján keresztül el is érhető. A router kifelé néző, 22-es portját a webszerver üzemeltetője és a webfejlesztők használhatják arra, hogy SSH-hozzáférést nyerjenek a webszerverhez, így azt futás közben tudják módosítani. Természetesen ehhez autentikálniuk kell magukat.
 További portokat az igényeknek megfelően megnyithatunk a routeren, de a jelenleg feleslegesnek megítélt portokat zárva tartjuk.
@@ -298,27 +301,56 @@ A router konfigurációs felülete elérhető webböngészőből, ezt viszont cs
 A DHCP szerver úgy fog működni, hogy az Internal és a 3 gépterem LAN-hálózatának oszt ki címeket a következőképpen:
 
 - Internal: 10.0.0.2-30 tartományban oszt ki címeket, ez 29 címet jelentene, viszont egyrészt 10.0.0.2 az iskola webszervere fog futni, másrészt a 10.0.0.3-ra valószínűleg egy nyomtatót fognak csatlakoztatni az iskolában, szóval ténylegesen 27 címet tudunk kiszolgálni, ami az iskola tanárainak telefonjaiból, laptopjából, iskolai asztali számítógépeiből álló eszközparkot lefedheti.
-- gepterem1: 10.0.0.34-62 címtartományból fognak címeket kapni a gépterem gépei
--
--
+- gepterem1: az 1-es gépterem gépei a 10.0.0.34-62 címtartományból fognak címeket kapni. A címtartomány 29 gépnek enged hálózati hozzáférést
+- gepterem2: a 2-es gépterem gépei a 10.0.0.66-94 címtartományból fognak címeket kapni a gépterem gépei
+- gepterem3: az 3-as gépterem gépei a 10.0.0.98-126 címtartományból fognak címeket kapni a gépterem gépei
 
 ![router dhcp pools](dhcp_poolok.jpg)
 
-### 3.1 Webszerver <a id="imp-1"></a>
+#### VPN-elérés
 
-Apache-t használtunk a webszerver kialakításához:
-A webszerver a 80-as porton érhető el, a "public.beadando.server" nevezető domainen.
-A html-fájl megtalálható a "/var/www/szero" mappában.
+VPN-elérést is megadtunk a webfejlesztőknek valamint a rendszergazdának, tehát így is el tudják érni a belső iskolai hálózat gépeit.
 
-### 3.2 Fájlszerver <a id="imp-2"></a> **todo**
+![VPN access](vpneleres1.jpg)
 
-### 3.3 Levelezőszerver <a id="imp-3"></a>
+Jelenleg egy 'levente' nevű felhasználót adtunk meg egy hozzá tartozó jelszóval, így a kliens beállításakor VPN-nel ezekkel az ad beléphetünk az iskolai hálózatban L2TP (Layer 2 Tunneling Protocol) segítségével.
+A VPN-kapcsolat Windowsban beállítható.
+![VPN access2](vpneleres2.jpg)
 
+A kliens beállítása így történik egy iskolától távoli Windows 10 rendszeren (Settings>Network&Internet>VPN>Add VPN connection):
+![VPN client settings](vpnkliens.jpg)
+
+Amennyiben az otthoni számítógépen jól adtuk meg a felhasználói adatokat, a VPN-szerver címét (ami a router publikus IP-címe vagy amennyiben van, domain neve), és az úgynevezett pre-shared key-t (egy jelszó, ami a VPN elkészítésekor lett megadva), akkor a csatlakozás sikeres lesz, így az iskola gépei elérhetővé válnak (amennyiben azok bekapcsolt állapotban vannak).
+
+Az alábbi példában én az iskolai belső hálózatból 2 gateway-t pingeltem meg, és mivel ezek választ adtak, ezért lényegében így a belső hálózat bármelyik gépére be tudok jelentkezni tetszés szerint.
+Ez megkönnyítheti a rendszergazda munkáját, élhet a távsegítség lehetőségével, amennyiben szoftveres probléma merülne fel az iskola valamely számítógépén.
+
+A webfejlesztők SSH mellett így már VPN-nel is fel tudják tölteni a weboldal frissített változatát. Ha egyszerre több felhasználó is szeretne élni VPN nyújtotta lehetőségekkel, akkor a rendszergazda a RouterOS beállításaiban felvehet újabb felhasználókat.
+
+![VPN ping](vpnping.jpg)
+
+### 3.2 Webszerver <a id="imp-2"></a>
+
+A webszerver kialakítását Sipos Levente végezte. Apache-t használtunk a webszerver kialakításához:
+A webszerver a 80-as porton érhető el, a "public.beadando.server" nevezetű domainen.
+A weboldal működtetéséhez szükséges fájlok, statikus erőforrások (képek, dokumentumok) megtalálhatóak a "/var/www/szero" mappában. Lényegében az Apache ezekre az erőforrásokra vonatkozó kéréseket figyeli, és kiszolgálja HTTP-válaszok formájában.
+
+### 3.3 Fájlszerver <a id="imp-3"></a> **todo**
+
+A fájlszerver konfigurációját Sipos Levente végezte.
+
+### 3.4 Levelezőszerver <a id="imp-4"></a>
+
+A levelezőszervert Sipos Levente konfigurálta be.
 Dovecot IMAP/POP3 Server-t használtunk a levelező szerver kialakítása érdekében.
 Annak érdekében hogy ne kelljen az ip-címet használni a "@" után ezért egy domain nevet kellett létrehozni:
 a domain amelyen keresztül tudunk levelezni: - public.mail.beadando
 Majd a "mailutils" package feltelepítésével már tudunk emaileket küldeni különböző usereknek
-Email küldése: - mail -s "test Email" <user>@public.mail.beadando
+Email küldése:
+
+```bash
+mail -s "test Email" <user>@public.mail.beadando
+```
 
 ## 4. Tesztelés <a id="test"></a> **todo**
 
