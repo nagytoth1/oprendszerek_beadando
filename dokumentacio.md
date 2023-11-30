@@ -352,6 +352,8 @@ Email küldése:
 mail -s "test Email" <user>@public.mail.beadando
 ```
 
+\<user\> ebben az esetben egy regisztrált felhasználója a levelezőszervernek.
+
 ## 4. Tesztelés <a id="test"></a> **todo**
 
 ## 5. Csapattagok <a id="mem"></a>
