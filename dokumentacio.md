@@ -40,8 +40,7 @@
 
 Feladatunk a Battyhyány Lajos Gimnázium (fiktív iskola) informatikai rendszerének megteremtése. Az intézmény igazgatója tisztelt meg minket ezen munka megtervezésével és kivitelezésével. Az informatikai rendszer magában fogja foglalni egy internethálózat kiépítését, a belső hálózat megtervezését, egy fájlszerver, webszerver és egy levelezőszerver felépítését és üzemeltetését, valamint a kért kliensek és szerverek használatához szükséges operációs rendszerek telepítését, ennek megfelelő szoftveres és hardveres erőforrások biztosítását. Ezek mellett fontos, hogy az iskola hálózatát megfelelő minőségű védelemmel (tűzfal, jogosultsági rendszerek) is ellássuk.
 
-Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. A szolgáltató az XYZMail. Ezt jelenleg weben érik el a **todo** `public` címen. Arra
-viszont igény lenne, hogy minden kliens számítógépre kerüljön fel egy levelezőkliens, hogy így
+Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. Arra viszont igény lenne, hogy minden kliens számítógépre kerüljön fel egy levelezőkliens, hogy így
 kényelmesebb legyen a levelek kezelése.
 
 ## 1.2 Használati esetek <a id="use"></a> **todo**
@@ -196,8 +195,6 @@ A Samba fájlszerver az **SMB** hálózati protokollt használja.
 
 ### 2.4.2 Levelezőszerver terv <a id="serv-2"></a>
 
-**todo** Levelezőszervereket összehasonlító táblázat ide
-
 POP3 protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
 A levelek küldésére az SMTP protokoll fog működni.
 Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver konfigurálásához.
@@ -245,7 +242,7 @@ A weboldaltervet Gajdos György készítette el.
 
 ## 2.5 Kliens tervezése <a id="cli"></a> **todo**
 
-## 2.6 Tesztelési terv <a id="testp"></a> **todo**
+## 2.6 Tesztelési terv <a id="testp"></a>
 
 | Teszt azonosító | Tesztelés tárgya<br>(mit teszteltünk)                                         | Elvárt eredmény | Megjegyzés                                             |
 | --------------- | ----------------------------------------------------------------------------- | --------------- | ------------------------------------------------------ |
