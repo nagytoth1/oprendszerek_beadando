@@ -162,7 +162,7 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 - Web- és fájlszerver (Ubuntu): 10.0.0.2
 - Kliens: DHCP [10.0.0.3 ; 10.0.0.31] tartományból
 
-![Logikai topológia](logikai_topologia.JPG)
+![Logikai topológia](kepek/logikai_topologia.JPG)
 
 ### 2.3.3 Tűzfal-beállítások <a id="net-3"></a>
 
@@ -222,7 +222,7 @@ A webszer alapvetően statikus tartalmú HTML-állományokat fog hosztolni dinam
 
 Egy iskolának a weboldalát kívánjuk létrehozni, mely a következő elképzelések alapján valósul meg. A weboldal megnyitása követően egy Kezdőlap/Főoldal jelenik, ahol egy rövid leírás található magáról az iskoláról, illetve az elért sikereiről.
 
-![Weboldalterv](./weboldalterv.png)
+![Weboldalterv](kepek/weboldalterv.png)
 
 A weboldalon található egy menüsáv, ahol a felhasználó könnyen tud tájékozodni a felületen. A menüsávban megtalálhatóak a **Kezdőlap**, **Felvételi**, **Tantárgyak**, **Magunkról**, **Kapcsolat** pont.
 
@@ -293,7 +293,7 @@ A Mikrotik router konfigurációját Nagy-Tóth Bence végezte. 5 db interfészt
 - **ether5**: a router gepterem3 LAN-hálózata felé néző interfésze, a 3-as gépterem gépeit tervezzük hálózatba kapcsolni ezen keresztül
 
 Az alábbi ábrán látható, hogy melyik interface melyik hálózatra van kötve, és hogy az adott LAN-hálózaton belül mely címen szolgál ő gatewayként.
-![router interfaces](interfacek.jpg)
+![router interfaces](kepek/interfacek.jpg)
 
 #### Megtett hardening lépések
 
@@ -302,7 +302,7 @@ További portokat az igényeknek megfelően megnyithatunk a routeren, de a jelen
 
 A router konfigurációs felülete elérhető webböngészőből, ezt viszont csak a rendszeradminisztrátor tudhatja biztonsági okokból. Ezenkívül a Winbox programot futtatva a rendszeradminisztrátor egy másik, alternatív módon is használni tudja a konfigurációs felületet.
 
-![router hardening steps](hardening.jpg)
+![router hardening steps](kepek/hardening.jpg)
 
 A DHCP szerver úgy fog működni, hogy az Internal és a 3 gépterem LAN-hálózatának oszt ki címeket a következőképpen:
 
@@ -311,20 +311,20 @@ A DHCP szerver úgy fog működni, hogy az Internal és a 3 gépterem LAN-háló
 - gepterem2: a 2-es gépterem gépei a 10.0.0.66-94 címtartományból fognak címeket kapni a gépterem gépei
 - gepterem3: az 3-as gépterem gépei a 10.0.0.98-126 címtartományból fognak címeket kapni a gépterem gépei
 
-![router dhcp pools](dhcp_poolok.jpg)
+![router dhcp pools](kepek/dhcp_poolok.jpg)
 
 #### VPN-elérés
 
 VPN-elérést is megadtunk a webfejlesztőknek valamint a rendszergazdának, tehát így is el tudják érni a belső iskolai hálózat gépeit.
 
-![VPN access](vpneleres1.jpg)
+![VPN access](kepek/vpneleres1.jpg)
 
 Jelenleg egy 'levente' nevű felhasználót adtunk meg egy hozzá tartozó jelszóval, így a kliens beállításakor VPN-nel ezekkel az ad beléphetünk az iskolai hálózatban L2TP (Layer 2 Tunneling Protocol) segítségével.
 A VPN-kapcsolat Windowsban beállítható.
-![VPN access2](vpneleres2.jpg)
+![VPN access2](kepek/vpneleres2.jpg)
 
 A kliens beállítása így történik egy iskolától távoli Windows 10 rendszeren (Settings>Network&Internet>VPN>Add VPN connection):
-![VPN client settings](vpnkliens.jpg)
+![VPN client settings](kepek/vpnkliens.jpg)
 
 Amennyiben az otthoni számítógépen jól adtuk meg a felhasználói adatokat, a VPN-szerver címét (ami a router publikus IP-címe vagy amennyiben van, domain neve), és az úgynevezett pre-shared key-t (egy jelszó, ami a VPN elkészítésekor lett megadva), akkor a csatlakozás sikeres lesz, így az iskola gépei elérhetővé válnak (amennyiben azok bekapcsolt állapotban vannak).
 
@@ -333,7 +333,7 @@ Ez megkönnyítheti a rendszergazda munkáját, élhet a távsegítség lehetős
 
 A webfejlesztők SSH mellett így már VPN-nel is fel tudják tölteni a weboldal frissített változatát. Ha egyszerre több felhasználó is szeretne élni VPN nyújtotta lehetőségekkel, akkor a rendszergazda a RouterOS beállításaiban felvehet újabb felhasználókat.
 
-![VPN ping](vpnping.jpg)
+![VPN ping](kepek/vpnping.jpg)
 
 ### 3.2 Webszerver <a id="imp-2"></a>
 
