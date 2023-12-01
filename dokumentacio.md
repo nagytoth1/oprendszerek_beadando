@@ -45,6 +45,8 @@ kényelmesebb legyen a levelek kezelése.
 
 ## 1.2 Használati esetek <a id="use"></a> **todo**
 
+táblázat jön ide
+
 ## 1.3 Követelménylista <a id="req"></a>
 
 | Komponens       | Elvárás                                                                                                                     |
@@ -143,7 +145,22 @@ Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ez
 | NFS                | Unix/Linux hálózatokon belüli egyszerű fájlmegosztás, megerősített biztonsági funkciók                                                                                                                                             | nehezebb konfigurálni<br>korlátozott platform támogatás (Unix-alapú rendszerek)                                                                      |
 | FTP                | Különböző platformokkal kompatibilis, Fájlok nyilvános elérésének biztosítására vagy fájlok távoli helyek közötti átvitelére alkalmas.                                                                                             | néhány funkció hiányzik belőle a zökkenőmentes integrációhoz (hozzáférés-kezelés hiányos)<br>A biztonság korlátozott, különösen a régebbi verziókban |
 
-## 2.2 Rendszerterv vázlat <a id="sys"></a> **todo**
+## 2.2 Rendszerterv vázlat <a id="sys"></a>
+
+| Komponens típusa                           | Választott komponens                         |
+| ------------------------------------------ | -------------------------------------------- |
+| Internetszolgáltató                        | Vodafone                                     |
+| Internetszolgáltatótól kért internetcsomag | Internet 300                                 |
+| Adatbázis szerver                          | nincs, statikus adatokkal működik a weboldal |
+| Webszerver                                 | Apache                                       |
+| Webszerver operációs rendszere             | Ubuntu Linux 22.04                           |
+| Fájlszerver                                | SMB                                          |
+| Fájlszerver operációs rendszere            | Ubuntu Linux 22.04                           |
+| Levelezőszerver                            | Dovecot                                      |
+| Levelezőszerver operációs rendszere        | Ubuntu Linux 22.04                           |
+| Kliens számítógépek operációs rendszere    | Windows 11 Home                              |
+| Telepíteni kívánt levelezőkliens           | Microsoft Outlook                            |
+| Telepíteni kívánt webböngésző              | Microsoft Edge                               |
 
 ## 2.3 Hálózati terv <a id="net"></a>
 
@@ -257,7 +274,7 @@ Alapvetően háromféle felhasználói csoportot különböztetünk meg:
 | NET_05          | Router elérése SSH-val a beállított porton keresztül                          | Sikeres         | hardeninget teszteljük                                      |
 | NET_06          | Router elérése Telnettel                                                      | Sikertelen      | hardeninget teszteljük                                      |
 | NET_07          | Routerre fájlokat juttatunk FTP protokoll segítségével                        | Sikertelen      | hardeninget teszteljük                                      |
-| NET_08          | Router elérése SSH-val                                                        | Sikertelen      | hardeninget teszteljük                                      |
+| NET_08          | Router elérése WinBoxban, külső hálózatról                                    | Sikertelen      | hardeninget teszteljük                                      |
 | NET_09          | Webszerver elérése SSH-val a routeren keresztül (port forwarding)             | Sikeres         | tűzfalbeállításokat teszteljük                              |
 | NET_10          | Iskola honlapjának elérése a routeren (gatewayen) keresztül (port forwarding) | Sikeres         | tűzfalbeállításokat teszteljük                              |
 | NET_11          | DHCP-vel IP-konfigurációk kiosztása 29 géptermi gép részére                   | Sikeres         | DHCP-szerver konfigurációját teszteljük                     |
