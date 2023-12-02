@@ -43,9 +43,14 @@ Feladatunk a Battyhyány Lajos Gimnázium (fiktív iskola) informatikai rendszer
 Levelezőszolgáltatás telepítése feltétlenül szükséges, mivel korábban semmilyen levelezőszolgáltatás nem volt telepítve, a dolgozók kívánt konkrét e-mail azonosítóját az iskola gazdasági osztálya szerzi be. Arra viszont igény lenne, hogy minden kliens számítógépre kerüljön fel egy levelezőkliens, hogy így
 kényelmesebb legyen a levelek kezelése.
 
-## 1.2 Használati esetek <a id="use"></a> **todo**
+## 1.2 Használati esetek <a id="use"></a>
 
-táblázat jön ide
+| Felhasználó csoportok / Funkciók | iskola honlapjának böngészése | közös mappa elérése (fájlszerver) | levelezőkliens használata | iskola gépeinek használata | hallgatók mappa elérése (fájlszerver) | tanárok mappa elérése (fájlszerver) | gazdasági mappa elérése (fájlszerver) | saját home mappa elérése |
+| -------------------------------- | ----------------------------- | --------------------------------- | ------------------------- | -------------------------- | ------------------------------------- | ----------------------------------- | ------------------------------------- | ------------------------ |
+| szülő                            | x                             |                                   |                           |                            |                                       |                                     |                                       |                          |
+| hallgató                         | x                             | x                                 | x                         | x                          | x                                     |                                     |                                       | x                        |
+| tanár                            | x                             | x                                 | x                         | x                          |                                       | x                                   |                                       | x                        |
+| gazdasági ügyintéző              | x                             | x                                 | x                         | x                          |                                       |                                     | x                                     | x                        |
 
 ## 1.3 Követelménylista <a id="req"></a>
 
@@ -355,12 +360,25 @@ A webfejlesztők SSH mellett így már VPN-nel is fel tudják tölteni a webolda
 ### 3.2 Webszerver <a id="imp-2"></a>
 
 A webszerver kialakítását Sipos Levente végezte. Apache-t használtunk a webszerver kialakításához:
-A webszerver a 80-as porton érhető el, a "public.beadando.server" nevezetű domainen.
+A webszerver kívülről a jól ismert HTTP 80-as portján érhető el, a "public.beadando.server" nevezetű domainen.
+Kívülről lényegében a router címét írjuk be, mivel ez egy nyilvánosan route-olható, elérhető cím, a router 80-as portjáról érkező kéréseket átküldi a webszerver 8080-as portjára, ahol ténylegesen a weboldal tartalma található.
 A weboldal működtetéséhez szükséges fájlok, statikus erőforrások (képek, dokumentumok) megtalálhatóak a "/var/www/szero" mappában. Lényegében az Apache ezekre az erőforrásokra vonatkozó kéréseket figyeli, és kiszolgálja HTTP-válaszok formájában.
 
-### 3.3 Fájlszerver <a id="imp-3"></a> **todo**
+### 3.3 Fájlszerver <a id="imp-3"></a>
 
-A fájlszerver konfigurációját Sipos Levente végezte.
+A Samba fájlszerver konfigurációját Sipos Levente végezte.
+
+Háromféle felhasználói csoportot hoztunk létre.
+
+A következő felhasználókat adtuk hozzá három csoport valamelyikéhez:
+| nev | csoport | csoportkod |
+| ---------- | --------- | ---------- |
+| roland | tanarok | 501 |
+| ferenc | tanarok | 501 |
+| goboly | gazdasagi | 502 |
+| tcwzgo | gazdasagi | 502 |
+| dzkbx0 | kozos | 500 |
+| d985et | kozos | 500 |
 
 ### 3.4 Levelezőszerver <a id="imp-4"></a>
 
