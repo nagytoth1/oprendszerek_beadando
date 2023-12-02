@@ -1,4 +1,9 @@
 <h2> Linux fájlszerver központi felhasználó kezeléssel, webszolgáltatás honlappal, levelezés</h2>
+<style>
+  img{
+    display: block; margin: 0 auto;
+  }
+</style>
 
 **<center>Szerzők: Sipos Levente, Gajdos György és <br> Nagy-Tóth Bence</center>**
 
@@ -184,7 +189,7 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 - Web- és fájlszerver (Ubuntu): 10.0.0.2
 - Kliens: DHCP [10.0.0.3 ; 10.0.0.31] tartományból
 
-![Logikai topológia](kepek/logikai_topologia.JPG)
+<img src="kepek/logikai_topologia.jpg" alt="Logikai topológia" style="width:90%;">
 
 ### 2.3.3 Tűzfal-beállítások <a id="net-3"></a>
 
@@ -199,52 +204,63 @@ Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt
 
 ### 2.4.1 Fájlszerver terv <a id="serv-1"></a>
 
-- Samba fájlszerver, ami lehetőséget ad egy kliens gép számára, hogy hozzáférjen a fájlszerverhez.:
-  - [Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
-- Samba telepítése:
-  - sudo apt install samba
-- Felhasználók felvétele:
-  - smbpasswd -a user
-  - groupadd -g 501 tanarok
-  - groupadd -g 502 gazdasagi
-  - groupadd -g 500 kozos
-- Csoport mapppa létrehozása, és jogosultság hozzáadása(példa a "tanarok" csoporttal):
-  - mdkir -p /var/fileServer/tanarok
-  - chgrp tanarok /var/fileServer/tanarok
-  - chmod 660 /var/fileServer/tanarok
+Samba fájlszervert fogjuk használni, ami lehetőséget ad a kliensek számára, hogy hozzáférjenek a fájlszerveren tárolt adatokhoz, és ő maguk is tároljanak itt fájlokat. <br>
+[Samba Dokumentáció](https://ubuntu.com/server/docs/samba-file-server)
 
-A Samba fájlszerver az **SMB** hálózati protokollt használja.
+A Samba az SMB hálózati protokollt fogja használni a fájlok küldözgetéséhez.
+
+Alapvetően háromféle felhasználói csoportot különböztetünk meg. A következő 6 db felhasználót adjuk hozzá a 3 elkészített felhasználói csoporthoz.
+| nev | csoport | csoportkod |
+| ---------- | --------- | ---------- |
+| roland | tanarok | 501 |
+| ferenc | tanarok | 501 |
+| goboly | gazdasagi | 502 |
+| tcwzgo | gazdasagi | 502 |
+| dzkbx0 | kozos | 500 |
+| d985et | kozos | 500 |
+
+A használati esetes fejezetnek megfelelően minden felhasználó eléri a `kozos` névvel ellátott mappát.
+Továbbá minden a `tanarok` és `gazdasagi` csoportnak lesz egy-egy csoportos hozzáférésű mappája:
+
+- `tanarok` mappa: csak a tanári kar dolgozói (a tanárok felhasználói csoport tagjai) férhetnek hozzá
+- `gazdasagi` mappa: csak a gazdasági osztály dolgozói férhetnek hozzá
+
+Ezenkívül minden felhasználó kapni fog egy saját felhasználónevével ellátott `home` mappát, amihez csak az adott felhasználó férhet hozzá (privát hozzáférésű).
+
+A kliensekre ezeket a hálózati mappákat be kell állítani.
+Például ferenc nevű felhasználónak állítsuk be a saját `home` mappáját Windows CMD-ben:
+
+```cmd
+net use K: \\10.0.0.2\ferenc
+```
 
 ### 2.4.2 Levelezőszerver terv <a id="serv-2"></a>
 
-POP3 protokollt fogjuk használni a levelek fogadásához a hatékonyabb biztonság érdekében, mivel az email csak egyetlen kliensgépre töltődik le.
-A levelek küldésére az SMTP protokoll fog működni.
-Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver konfigurálásához.
-
+IMAP (Internet Message Access Protocol) protokollt fogjuk használni a levelek fogadásához, így a levelezőszerveren az emailezések attól még meg fognak maradni, amennyiben a kliensek törölnék azokat a saját gépükről. A tanárok, gazdasági osztály dolgozói így több eszközről is be tudnak lépni, és le tudják kérni a levelezőszervertől a hozzájuk tartozó emaileket.
+A kliensek a levelek szerverre való küldésére az SMTP-t (Simple Mail Transfer Protocol) fogják használni.
+Az Ubuntu szerveren a Dovecot nevű alkalmazást használjuk a levelezőszerver konfigurálásához.<br>
 [Dovecot Dokumentáció](https://ubuntu.com/server/docs/mail-dovecot)
 
 ### 2.4.3 Webszerver terv <a id="serv-3"></a>
 
-- Maga a webszolgáltatás Linux alapon Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
+- Maga a webszolgáltatás Linux alapon, Ubuntu-n készül, melyen belül Apache(2) webszolgáltatás lesz telepítve.
 - Apache telepítése:
   - sudo apt install apache2
 - html fájl helye:
-  - /var/www
+  - /var/www/szero
 - Szerver aktiválása:
-  - sudo a2ensite <conf fájl>
+  - sudo a2ensite szero.conf
 - Portok config fájljának a helye:
-  - /etx/apache2/ports.conf
+- /etc/apache2/ports.conf
 - A szerverhez tartozó html fájlokat a /var/www/szero mappában találjuk meg.
 
-Az Apache webszerver a 8080-as porton fut, várja a kéréseket.
-
-A webszer alapvetően statikus tartalmú HTML-állományokat fog hosztolni dinamikus útvonalak nélkül, ezért az Apache szerveren kívül másra esetünkben nincs szükség.
+Az Apache webszerver a beállításoknak megfelelően 8080-as porton fog futni, itt várja a kéréseket. A webszerver alapvetően statikus tartalmú HTML-állományokat fog hosztolni, ezért más komponensre esetünkben -egyelőre- nincs szükség.
 
 ### 2.4.4 Elérhető weboldalak <a id="serv-4"></a>
 
 Egy iskolának a weboldalát kívánjuk létrehozni, mely a következő elképzelések alapján valósul meg. A weboldal megnyitása követően egy Kezdőlap/Főoldal jelenik, ahol egy rövid leírás található magáról az iskoláról, illetve az elért sikereiről.
 
-![Weboldalterv](kepek/weboldalterv.png)
+<img src="kepek/weboldalterv.png" alt="Weboldalterv" style="height:330px;">
 
 A weboldalon található egy menüsáv, ahol a felhasználó könnyen tud tájékozodni a felületen. A menüsávban megtalálhatóak a **Kezdőlap**, **Felvételi**, **Tantárgyak**, **Magunkról**, **Kapcsolat** pont.
 
@@ -266,7 +282,13 @@ Alapvetően háromféle felhasználói csoportot különböztetünk meg:
 - Tanárok: iskola oktatóinak csoportja
 - Közös: tanárok, diákok, gazdasági iroda közös csatornája
 
-## 2.5 Kliens tervezése <a id="cli"></a> **todo**
+## 2.5 Kliens tervezése <a id="cli"></a>
+
+A kliens számítógépek géptermekben lesznek telepítve, ezeket a gimnázium tanulói fogják használni informatika órákon. Ezért a Microsoft Office szoftvercsomagot mindenképpen fel kell telepítenünk számukra.
+Ezenkívül a Microsoft Edge webböngésző alapból fel lesz nekik telepítve a Windows 11-ben.
+A fájlszerver `kozos` mappájához való hozzáférését kell még beállítani a klienseken, így a hallgatók ebben a mappában hozzáférhetnek oktatóanyagokhoz, gyakorlati anyagokhoz.
+
+Ha valaki otthonról szeretne dolgozni az iskola tanárai közül, azt is meg tudjuk oldani egy új VPN-felhasználó felvételével szerveroldalon, kliensoldalon ezt a kapcsolatot az új felhasználó belépési adataival vesszük fel.
 
 ## 2.6 Tesztelési terv <a id="testp"></a>
 
@@ -346,7 +368,7 @@ A VPN-kapcsolat Windowsban beállítható.
 ![VPN access2](kepek/vpneleres2.jpg)
 
 A kliens beállítása így történik egy iskolától távoli Windows 10 rendszeren (Settings>Network&Internet>VPN>Add VPN connection):
-![VPN client settings](kepek/vpnkliens.jpg)
+<img src="kepek/vpnkliens.jpg" alt="VPN client settings in Windows 10" style="height:400px;">
 
 Amennyiben az otthoni számítógépen jól adtuk meg a felhasználói adatokat, a VPN-szerver címét (ami a router publikus IP-címe vagy amennyiben van, domain neve), és az úgynevezett pre-shared key-t (egy jelszó, ami a VPN elkészítésekor lett megadva), akkor a csatlakozás sikeres lesz, így az iskola gépei elérhetővé válnak (amennyiben azok bekapcsolt állapotban vannak).
 
@@ -360,40 +382,67 @@ A webfejlesztők SSH mellett így már VPN-nel is fel tudják tölteni a webolda
 ### 3.2 Webszerver <a id="imp-2"></a>
 
 A webszerver kialakítását Sipos Levente végezte. Apache-t használtunk a webszerver kialakításához:
-A webszerver kívülről a jól ismert HTTP 80-as portján érhető el, a "public.beadando.server" nevezetű domainen.
-Kívülről lényegében a router címét írjuk be, mivel ez egy nyilvánosan route-olható, elérhető cím, a router 80-as portjáról érkező kéréseket átküldi a webszerver 8080-as portjára, ahol ténylegesen a weboldal tartalma található.
-A weboldal működtetéséhez szükséges fájlok, statikus erőforrások (képek, dokumentumok) megtalálhatóak a "/var/www/szero" mappában. Lényegében az Apache ezekre az erőforrásokra vonatkozó kéréseket figyeli, és kiszolgálja HTTP-válaszok formájában.
+A webszerver kívülről a router 80-as portján érhető el, a "public.beadando.server" nevezetű domainen.
+Kívülről lényegében a router címét adjuk meg, mivel ez egy nyilvánosan route-olható, elérhető (internetszolgáltatótól kapott) cím, a routernek erre az interfészre (ether1), a 80-as portról (kívülről) érkező kéréseket átküldi a webszerver 8080-as portjára (ezt nevezzük port forwardingnak), ahol ténylegesen a weboldal tartalma található.
+A weboldal működtetéséhez szükséges fájlok, statikus erőforrások (képek, dokumentumok) megtalálhatóak a `/var/www/szero` mappában. Lényegében az Apache ezekre az erőforrásokra vonatkozó kéréseket figyeli, és kiszolgálja HTTP-válaszok formájában.
+
+```sh
+# 1. Apache telepítése
+sudo apt update
+sudo apt install apache2
+# 2. saját html és mappa készítés
+sudo mkdir /var/www/szero
+cd /var/www/szero
+# 3. További konfigurációs lépések Apacheban...
+# 4. A /var/www/szero mappába tettük az elkészült weboldal fájljait
+```
+
+Apache további konfigurációs lépései megtalálhatóak az Ubuntu hivatalos oldalán: [Apache Dokumentáció](https://ubuntu.com/tutorial/install-and-configure-apache#1-overview)
+
+Esetenként előfordulhat, hogy újra kell indítani a fájlszervert.
+Ezt a következő parancsokkal tehetjük meg
+
+```sh
+sudo service apache2 restart
+sudo service a2ensite szero.conf
+```
 
 ### 3.3 Fájlszerver <a id="imp-3"></a>
 
 A Samba fájlszerver konfigurációját Sipos Levente végezte.
 
-Háromféle felhasználói csoportot hoztunk létre.
+- Samba telepítése:
+  - sudo apt install samba
+- Felhasználók felvétele:
+  - smbpasswd -a user \*
+  - groupadd -g 501 tanarok
+  - groupadd -g 502 gazdasagi
+  - groupadd -g 500 kozos
+- Csoport mapppa létrehozása, és jogosultság hozzáadása(példa a "tanarok" csoporttal):
 
-A következő felhasználókat adtuk hozzá három csoport valamelyikéhez:
-| nev | csoport | csoportkod |
-| ---------- | --------- | ---------- |
-| roland | tanarok | 501 |
-| ferenc | tanarok | 501 |
-| goboly | gazdasagi | 502 |
-| tcwzgo | gazdasagi | 502 |
-| dzkbx0 | kozos | 500 |
-| d985et | kozos | 500 |
+  - mdkir -p /var/fileServer/tanarok
+  - chgrp tanarok /var/fileServer/tanarok
+  - chmod 660 /var/fileServer/tanarok
+
+* Fontos, hogy ezt a felhasználót az Ubuntuban is létre kell hozni, tehát `user` egy létező felhasználója a szervernek. A létrehozott Ubuntus felhasználók belépési adatait nem adjuk ki mások számára, és ezek a jelszavak lehetőleg ne egyezzenek az SMB felhasználók jelszavaival, mert ez egy biztonsági rést is jelenthetne a szerverünkre nézve.
 
 ### 3.4 Levelezőszerver <a id="imp-4"></a>
 
 A levelezőszervert Sipos Levente konfigurálta be.
-Dovecot IMAP/POP3 Server-t használtunk a levelező szerver kialakítása érdekében.
+Dovecot IMAP Server-t használtunk a levelező szerver kialakítása érdekében.
 Annak érdekében hogy ne kelljen az ip-címet használni a "@" után ezért egy domain nevet kellett létrehozni:
 a domain amelyen keresztül tudunk levelezni: - public.mail.beadando
-Majd a "mailutils" package feltelepítésével már tudunk emaileket küldeni különböző usereknek
-Email küldése:
+Majd a `mailutils` package feltelepítésével már tudunk emaileket küldeni különböző usereknek.
+
+Egy email elküldése:
 
 ```bash
 mail -s "test Email" <user>@public.mail.beadando
 ```
 
 \<user\> ebben az esetben egy regisztrált felhasználója a levelezőszervernek.
+
+Levente a konfigurációs fájlok módosítása mellett talált egy alternatív módszert is használt: a Webmin grafikus felület használatával lényegében egyszerűbben és egy helyről, központilag tudta kezelni a szervergépen futó több szervertípus (a webszerver, a levelezőszerver, és a fájlszerver) konfigurációját, a meglévő konfigurációk módosítását.
 
 ## 4. Tesztelés <a id="test"></a> **todo**
 
