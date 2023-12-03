@@ -182,12 +182,19 @@ A Mikrotik router konfigurációját a RouterOS operációs rendszerben kívánj
 
 ### 2.3.2 IP-címzési terv <a id="net-2"></a>
 
-- Internal (belső) hálózat: 10.0.0.0/27
-- Alhálózati maszk: 255.255.255.224
-- Hálózat nagysága: 30 host
-- Gateway/Mikrotik router, egyben DNS és DHCP-szerver címe: 10.0.0.1
-- Web- és fájlszerver (Ubuntu): 10.0.0.2
-- Kliens: DHCP [10.0.0.3 ; 10.0.0.31] tartományból
+A belső iskolai hálózat a következőppen fog kinézni:
+
+| Alhálózat neve | Router interfésze | Hálózat      | Gateway   | DNS szerver | Hálózatban elhelyezhető kliensek száma |
+| -------------- | ----------------- | ------------ | --------- | ----------- | -------------------------------------- |
+| Internal       | ether2            | 10.0.0.0/27  | 10.0.0.1  | 10.0.0.1    | 28                                     |
+| gepterem1      | ether3            | 10.0.0.32/27 | 10.0.0.33 | 10.0.0.1    | 29                                     |
+| gepterem2      | ether4            | 10.0.0.64/27 | 10.0.0.65 | 10.0.0.1    | 29                                     |
+| gepterem3      | ether5            | 10.0.0.96/27 | 10.0.0.66 | 10.0.0.1    | 29                                     |
+
+- Gateway minden alhálózat esetében a Mikrotik router, ami egyben DNS- és DHCP-szerverként (alhálózat tagjai a DHCP-kliensek) is funkcionál, kívülről és belülről is elérhető
+  - A router egyébként internetes, iskolán kívül álló domain nevek esetén két CloudFlare DNS-szervert (1.1.1.3 és 1.0.0.3) kérdez, tehát minden erre vonatkozó kérést neki fog átirányítani
+- Web-, levelező- és fájlszerver (Ubuntu) belső hálózatbeli címe: 10.0.0.2, egyébként kívülről a routert kell 80-as porton megcímezni, és látható a weboldal felülete
+- az iskola összes jelenleg összesen 116 számítógép számára van hely
 
 <img src="kepek/logikai_topologia.jpg" alt="Logikai topológia" style="width:90%;">
 
@@ -351,9 +358,9 @@ A router konfigurációs felülete elérhető webböngészőből, ezt viszont cs
 A DHCP szerver úgy fog működni, hogy az Internal és a 3 gépterem LAN-hálózatának oszt ki címeket a következőképpen:
 
 - Internal: 10.0.0.2-30 tartományban oszt ki címeket, ez 29 címet jelentene, viszont egyrészt 10.0.0.2 az iskola webszervere fog futni, másrészt a 10.0.0.3-ra valószínűleg egy nyomtatót fognak csatlakoztatni az iskolában, szóval ténylegesen 27 címet tudunk kiszolgálni, ami az iskola tanárainak telefonjaiból, laptopjából, iskolai asztali számítógépeiből álló eszközparkot lefedheti.
-- gepterem1: az 1-es gépterem gépei a 10.0.0.34-62 címtartományból fognak címeket kapni. A címtartomány 29 gépnek enged hálózati hozzáférést
-- gepterem2: a 2-es gépterem gépei a 10.0.0.66-94 címtartományból fognak címeket kapni a gépterem gépei
-- gepterem3: az 3-as gépterem gépei a 10.0.0.98-126 címtartományból fognak címeket kapni a gépterem gépei
+- gepterem1 (max. 29 gép): az 1-es gépterem gépei a 10.0.0.34-62 címtartományból fognak címeket kapni.
+- gepterem2 (max. 29 gép): a 2-es gépterem gépei a 10.0.0.66-94 címtartományból fognak címeket kapni
+- gepterem3 (max. 29 gép): a 3-as gépterem gépei a 10.0.0.98-126 címtartományból fognak címeket kapni
 
 ![router dhcp pools](kepek/dhcp_poolok.jpg)
 
