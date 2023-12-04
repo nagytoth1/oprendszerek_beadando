@@ -123,6 +123,8 @@ Jelenlegi raktárkészletünknek megfelelően az alábbi eszközök közül tudn
 | Mikrotik | megfizethetőbb vállalati megoldások, kis- és középvállalati felhasználásra alkalmas, beállítása nem igényel akkora szaktudást | nagyszabású hálózati felépítéshez nem annyira alkalmas, korlátozott fejlesztői és felhasználói támogatással és erőforrásokkal rendelkezik |
 | Tenda | olcsóbb, alsó árketegóriás eszközök | konfigurálhatósága, személyre szabhatósága gyengébb, mint az előbb felsoroltaké |
 
+Részünkről megoldás szempontjából a Mikrotik lenne az optimális, ennek konfigurációjában csapatunk már komolyabb tapasztalatot szerzett, így gyorsabban, hatékonyabban végezhetjük az eszköz bekonfigurálását, mint például egy Tenda vagy egy Cisco router esetében. A Cisco routerek jellemzően túl drágák, ezért anyagi vonzata miatt sem feltétlenül telepítenénk egy iskolai környezetbe.
+
 Ugyanakkor fontos megjegyezni, hogy a router egy támadási felület, úgyhogy a biztonság szempontjából mindenképp egyetlen routert ajánlatos beszerezni, az ajánlott, a lehetőségeknek megfelelő védelmi beállításokat elvégezni rajta, és a belső hálózatot switchekkel, vezetéknélküli access pointokkal (AP-kal) bővíteni.
 
 ### 2.1.3. Szerver operációs rendszer kiválasztása <a id="sel-3"></a>
@@ -137,7 +139,7 @@ A szervergépen futó operációs rendszerre a különböző lehetőségek álln
 | Windows Server 2022 | a webszerver, levelezőszerver telepítése gyors                                                                                              | fizetős (egyszeri költség)                                                                                           |
 | CentOS Linux        | ingyenes, kevesebb erőforrással fut, gyakori frissítések, stabil (az alkalmazásokat elég ritkábban frissíteni), hasznos biztonsági funkciók | nehézkesebb használat: ha egy alkalmazás legfrissebb változatát szeretnénk telepíteni, azt manuálisan kell elvégezni |
 
-Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ezért az ingyenessége végett Ubuntu Linux operációs rendszert ajánljuk.
+Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ezért az ingyenessége, és kedvezőbb erőforrás-használata végett szerver oldalon az Ubuntu Linux operációs rendszert ajánljuk a megrendelőnk figyelmébe.
 
 ### 2.1.4. Webszerver kiválasztása <a id="sel-4"></a>
 
@@ -147,6 +149,8 @@ Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ez
 | Nginx      | ingyenes, gyorsabb töltési idő, nagyobb teljesítmény, lightweight: kevesebb erőforrást igényel a géptől | egyetlen konfigurációs fájl, kevésbé rugalmas, a fejlesztett modulok felett nincs irányításunk (nem lehet letiltani modulokat), kisebb közösségi támogatás |
 | XAMPP      | ingyenes                                                                                                | egy egész fejlesztői csomag telepítését vonja maga után, ami felesleges, biztonsági beállítások hiánya                                                     |
 
+Az iskola honlapját Apache webszerverrel üzemeltetnénk, amennyiben ez a megrendelőnknek is megfelelő, mivel konfigurálásához csapatunk jobban hozzá van szokva, és nem akarunk teljes fejlesztői környezetet hozzáadni, mint például a XAMPP esetén történt volna, mivel ez csak plusz tárhelyet jelentene a szerver oldalán.
+
 ### 2.1.5 Fájlszerver kiválasztása <a id="sel-5"></a>
 
 | Fájlszerver típusa | Előnyök                                                                                                                                                                                                                            | Hátrányok                                                                                                                                            |
@@ -154,6 +158,8 @@ Mivel az anyagi források egy középiskola esetében erősen korlátozottak, ez
 | Samba              | Erős biztonsági funkciókat biztosít<br>Támogatja a Windows, Linux és macOS rendszerek közötti platformok közötti fájl- és nyomtatómegosztást. Heterogén/multiplatform környezetekhez tökéletes<br>Integrálható Active Directoryval | a natív Windows fájlmegosztáshoz képest kissé lassabb teljesítményt tapasztalhatunk                                                                  |
 | NFS                | Unix/Linux hálózatokon belüli egyszerű fájlmegosztás, megerősített biztonsági funkciók                                                                                                                                             | nehezebb konfigurálni<br>korlátozott platform támogatás (Unix-alapú rendszerek)                                                                      |
 | FTP                | Különböző platformokkal kompatibilis, Fájlok nyilvános elérésének biztosítására vagy fájlok távoli helyek közötti átvitelére alkalmas.                                                                                             | néhány funkció hiányzik belőle a zökkenőmentes integrációhoz (hozzáférés-kezelés hiányos)<br>A biztonság korlátozott, különösen a régebbi verziókban |
+
+A Samba fájlszervert ajánljuk, mivel a szerver oldal Linuxon fog alapulni, és Windows-kliensek számára történik a megosztás, ezt a többplatformos megoldást a Samba biztosítja nekünk.
 
 ## 2.2 Rendszerterv vázlat <a id="sys"></a>
 
