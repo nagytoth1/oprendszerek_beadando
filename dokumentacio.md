@@ -223,6 +223,12 @@ Amennyiben szükség lenne VPN-kapcsolatra a webszerver konfigurálásához, azt
 
 ## 2.4 Szerver tervezése <a id="serv"></a>
 
+Tulajdonképpen háromféle szerver megvalósítását tervezzük egyetlen fizikai gépben:
+
+- egy webszerver: ez az iskola honlapját fogja szolgáltatni a külső szemlélők számára
+- egy fájlszerver: ez az iskola életében jellemző fájlokat tárolását végzi, ezzel az iskolán belüli hálózaton megoszthatunk erőforrásokat hallgatók, gazdasági ügyintézők és/vagy tanárok között. Alkalmas tananyagok, gyakorló, valamint beadandó feladatok tárolására.
+- egy levelezőszerver: lehetőséget biztosít az iskola tanárai, gazdasági dolgozói számára, hogy email formájában is kommunikálhassanak egymással, amennyiben szóbeli egyeztetésre nem adott vagy korlátozott a lehetőség
+
 ### 2.4.1 Fájlszerver terv <a id="serv-1"></a>
 
 Samba fájlszervert fogjuk használni, ami lehetőséget ad a kliensek számára, hogy hozzáférjenek a fájlszerveren tárolt adatokhoz, és ő maguk is tároljanak itt fájlokat. <br>
