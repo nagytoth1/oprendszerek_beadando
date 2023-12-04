@@ -50,6 +50,14 @@ kényelmesebb legyen a levelek kezelése.
 
 ## 1.2 Használati esetek <a id="use"></a>
 
+Közvetlenül vagy közvetve levezetve öt különböző csoportot különböztethetünk meg, akik a rendszerrel kapcsolatba lépnek:
+
+- Szülők, akik a diákok tanulását és előrehaladását követhetik figyelemmel.
+- Hallgatók, akik az iskola aktív tanulói, órákon használják az általunk telepített kliens számítógépeket, és az azon futó szoftvereket.
+- Tanárok, akik a diákok oktatásáért felelősek, velük tananyagokat oszthatnak meg, és emailezhetnek egymással.
+- Gazdasági ügyintéző, aki az iskola gazdasági ügyeiért felel.
+- IT üzemeltetők, akik az informatikai rendszereket tartják karban.
+
 | Felhasználó csoportok (sorok) / Funkciók (oszlopok) | iskola honlapjának böngészése | közös mappa elérése (fájlszerver) | levelezőkliens használata | iskola gépeinek használata | hallgatók mappa elérése (fájlszerver) | tanárok mappa elérése (fájlszerver) | gazdasági mappa elérése (fájlszerver) | saját home mappa elérése |
 | --------------------------------------------------- | ----------------------------- | --------------------------------- | ------------------------- | -------------------------- | ------------------------------------- | ----------------------------------- | ------------------------------------- | ------------------------ |
 | szülő                                               | x                             |                                   |                           |                            |                                       |                                     |                                       |                          |
