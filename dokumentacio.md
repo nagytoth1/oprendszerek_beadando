@@ -311,6 +311,20 @@ Alapvetően háromféle felhasználói csoportot különböztetünk meg:
 
 ## 2.5 Kliens tervezése <a id="cli"></a>
 
+Minden gépre egyetlen lokális felhasználót tervezünk telepíteni a következő módon:
+
+- hallgatóknak lesz egy "tanulo" nevezetű lokális felhasználójuk, amit egy egyszerűen megjegyezhető jelszóval fogunk levédeni
+- a kliensgépekre az operációs rendszer telepítését érdemes lenne hálózati bootolás segítségével végezni, ehhez egy PXE bootszervert fogunk futtatni az összes gép telepítésének napján
+  - NTFS fájlrendszert fogunk használni, ami támogat nagyobb merevlemezeket és nagyobb biztonságot nyújt (jogosultsági rendszerek kezelése, lemezhibák hatékonyabb kezelése)
+  - a kliensek telepítési ideje így igazából egy fél napra redukálható ezzel a módszerrel, egyszerre, párhuzamosan több gépet is telepíthetünk PXE hálózati bootolás segítségével
+  - ezt a telepítést érdemes minden évben egyszer elvégezni<br> (nyáron, tanévkezdés előtti napok valamelyikén)
+
+A Windows telepítési folyamat végeztével a rendszergazda végigmegy, és elvégzi a gépeken az operációs rendszer aktiválását, valamint feltelepíti az Office programcsomagot, valamint csatlakoztatja a klienseket azokhoz a fájlszerver azon mappáihoz, amihez hozzáférésük van, ennek megfelelően:
+
+- a hallgatók a `kozos` és a `home`,
+- a tanárok a `kozos`, a `home` és a `tanari`,
+- végül a gazdasági ügyintézők a `kozos`, a `home` és a `gazdasagi` mappákhoz férnek hozzá
+
 A kliens számítógépek géptermekben lesznek telepítve, ezeket a gimnázium tanulói fogják használni informatika órákon. Ezért a Microsoft Office szoftvercsomagot mindenképpen fel kell telepítenünk számukra.
 Ezenkívül a Microsoft Edge webböngésző alapból fel lesz nekik telepítve a Windows 11-ben.
 A fájlszerver `kozos` mappájához való hozzáférését kell még beállítani a klienseken, így a hallgatók ebben a mappában hozzáférhetnek oktatóanyagokhoz, gyakorlati anyagokhoz.
@@ -318,6 +332,8 @@ A fájlszerver `kozos` mappájához való hozzáférését kell még beállítan
 Ha valaki otthonról szeretne dolgozni az iskola tanárai közül, azt is meg tudjuk oldani egy új VPN-felhasználó felvételével szerveroldalon, kliensoldalon ezt a kapcsolatot az új felhasználó belépési adataival vesszük fel.
 
 ## 2.6 Tesztelési terv <a id="testp"></a>
+
+**todo**: még 5 test caset írni
 
 | Teszt azonosító | Tesztelés tárgya<br>(mit teszteltünk)                                         | Elvárt eredmény | Megjegyzés                                                  |
 | --------------- | ----------------------------------------------------------------------------- | --------------- | ----------------------------------------------------------- |
