@@ -1,4 +1,0 @@
-#0. npm-mel feltelepíteni a md-to-pdf packaget
-npm i g md-to-pdf
-#1. md2pdf futtatása (oprendszerek_beadando mappán belül)
-md2pdf dokumentacio.md
